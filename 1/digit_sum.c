@@ -1,13 +1,13 @@
 #include <stdio.h>
 
 
-int get_digit_sum(int number) {
+int dsum(int num) {
 
     int sum = 0;
 
-    while (number != 0) {
-        sum += number % 10;
-        number /= 10;
+    while (num != 0) {
+        sum += num % 10;
+        num /= 10;
     }
 
 
@@ -18,11 +18,12 @@ int get_digit_sum(int number) {
 
 int main() {
 
-    int number;
-    scanf("%d", &number);
+    int num;
+    scanf("%d", &num);
 
+    int r = dsum(num);
 
-    printf("Result: %d\n", get_digit_sum(number));
+    printf("Result: %d\n", r);
 
 
     return 0;

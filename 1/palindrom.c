@@ -1,31 +1,31 @@
 #include <stdio.h>
 
 
-int reverse(int number) {
-    int re_number = 0;
+int reverse(int num) {
+    int rnum = 0;
     int k = 0;
 
-    while (number != 0) {
-        re_number *= 10;
-        k = number % 10;
-        re_number += k;
-        number /= 10;
+    while (num != 0) {
+        rnum *= 10;
+        k = num % 10;
+        rnum += k;
+        num /= 10;
     }
 
-    return re_number;
+    return rnum;
 }
 
 
-int is_palindrom(int number) {
-    int re_number = reverse(number);
+int isP(int num) {
+    int rnum = reverse(num);
 
-    while (number != 0 || re_number != 0) {
-        if (number % 10 != re_number % 10) {
+    while (num != 0 || rnum != 0) {
+        if (num % 10 != rnum % 10) {
             return 0;
         }
 
-        number /= 10;
-        re_number /= 10;
+        num /= 10;
+        rnum /= 10;
     }
 
     return 1;
@@ -35,12 +35,12 @@ int is_palindrom(int number) {
 
 int main() {
 
-    int number;
-    scanf("%d", &number);
-    // int number = 10101;
+    int num;
+    scanf("%d", &num);
 
+    int r = isP(num);
 
-    if (is_palindrom(number)) {
+    if (r == 1) {
         printf("is palindrom\n");
     } else {
         printf("not palindrom\n");
