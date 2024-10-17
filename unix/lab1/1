@@ -1,0 +1,75 @@
+# 1
+
+1) enter
+
+2) name of the host:
+    hostname
+    uname -n
+
+3) arch of machine:
+    uname -m
+    date +'%d/%m/%Y %R'
+
+5) print aliases, create alias newdate with previous output:
+    alias
+    alias newdate="date +'%d/%m/%Y %R'"
+
+6) print env vars and describe some of them:
+    env
+
+    SHELL -- path to shell, command shell
+    USER -- user that started current shell
+    PATH -- search path for commands, left has more priority
+    HOME -- users home directory
+    LANG -- language that shell uses
+    MAIL -- name of the file to check for incomig mail
+    PS1 -- format of user input in shell, prompt string
+
+7) change PS1, what changed?
+    PS1='[\u@\h \W]\$ '
+    PS1="\[\e[31;1m\]\u@\h\[\e[m\]:\[\e[1;34m\]\w\[\e[37;0m\]\$\[\e[37;0m\] "
+
+8) change HOME var:
+    ~ become full path
+
+    all settings became default
+
+9)
+    which bash
+    /usr/bin/bash
+
+
+# 2
+
+
+1) who am i
+    whoami
+
+2) all users that work with the system
+    who
+
+3) 3 users that logged last
+    who -n 10
+
+4) print user groups
+    id -nG
+
+5) 
+    more /etc/passwd
+    dozen40:x:1000:1000::/opt/.dozen40:/bin/bash
+
+    1) login name
+    2) optional encrypted password or x if in /etc/shadow
+    3) user ID
+    4) group ID
+    5) comment to user account
+    6) home dir
+    7) command interpreter
+
+6) -
+
+7) - no permission
+
+8) - no permission
+
+9) questions: next file
