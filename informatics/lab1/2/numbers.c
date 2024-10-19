@@ -1,10 +1,13 @@
 #include <stdio.h>
+#include <math.h>
 
 
 // check if number is simple
 int check(int num) {
 
-    for (int i = 2; i * i <= num; i++) {
+    int num_root = sqrt(num);
+
+    for (int i = 2; i <= num_root; i++) {
 
         if (num % i == 0) {
             return 0;
