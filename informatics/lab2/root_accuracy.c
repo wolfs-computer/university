@@ -40,7 +40,8 @@ int check_root_acc(int a, int n, int acc, long double current_root, long double 
 
     /* printf("%Lf %Lf\n", next_root - current_root, powl(10, -(acc + 1))); */
 
-    return !(ld_mod(next_root - current_root) <= pow(10, -(acc + 1)));
+    return ld_mod(next_root - current_root) > pow(10, -(acc + 1));
+
 }
 
 
