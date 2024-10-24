@@ -39,6 +39,11 @@ long double root_of(int a, int n, int row_count) {
 
         y = (1 / (long double) n) * ((n - 1) * y + (a / pow(y, n - 1)));
 
+        // printf("p1 - %Lf\n", (1 / (long double) n));
+        // printf("p2 - %Lf\n", ((n - 1) * y + (a / pow(y, n - 1))));
+        // printf("y - %Lf\n", y);
+
+
         // printf("%Lf\n", y);
     }
 

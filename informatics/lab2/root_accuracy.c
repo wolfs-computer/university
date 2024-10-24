@@ -38,7 +38,9 @@ long double ld_mod(long double num) {
 
 int check_root_acc(int a, int n, int acc, long double current_root, long double next_root) {
 
-    /* printf("%Lf %Lf\n", next_root - current_root, powl(10, -(acc + 1))); */
+    // printf("%d %d %d %Lf %Lf\n", a, n, acc, current_root, next_root);
+    // printf("p1 = %Lf\n p2 = %Lf\n", next_root - current_root, powl(10, -(acc + 1)));
+    // printf("%d\n", ld_mod(next_root - current_root) > pow(10, -(acc + 1)));
 
     return ld_mod(next_root - current_root) > pow(10, -(acc + 1));
 
@@ -55,15 +57,24 @@ long double acc_root_of(int a, int n, int acc, int *row_count) {
     long double next_root = (1 / (long double) n) * ((n - 1) * current_root + ((long double) a / powl(current_root, n - 1)));
 
     *row_count = 1;
-    /* printf("%Lf\n", current_root); */
+
+    // printf("current_root = %Lf\n", current_root);
+    // printf("next_root = %Lf\n", next_root);
+    // printf("row_count = %d\n", *row_count);
 
 
     while (check_root_acc(a, n, acc, current_root, next_root)) {
+
 
         current_root = next_root;
         next_root = (1 / (long double) n) * ((n - 1) * current_root + ((long double) a / powl(current_root, n - 1)));
 
         (*row_count)++;
+
+        // printf("check = 1");
+        // printf("current_root = %Lf\n", current_root);
+        // printf("next_root = %Lf\n", next_root);
+        // printf("row_count = %d\n", *row_count);
 
         /* printf("%.19Lf\n", current_root); */
     }
@@ -73,6 +84,9 @@ long double acc_root_of(int a, int n, int acc, int *row_count) {
     long double bad_digit = (int)(current_root * powl(10, acc + 1)) % 10 * powl(10, -(acc + 1));
     /* printf(" %.19Lf\n", bad_digit); */
     current_root -= bad_digit;
+
+    // printf("bad_digit = %Lf\n", bad_digit);
+    // printf("current_root = %Lf\n", current_root);
 
 
     return current_root;
