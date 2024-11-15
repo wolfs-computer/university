@@ -1,5 +1,5 @@
-#ifndef _STAUTS_H_
-#define _STAUTS_H_
+#ifndef _STATUS_H_
+#define _STATUS_H_
 
 
 typedef enum _Status {

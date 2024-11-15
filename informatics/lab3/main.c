@@ -103,7 +103,6 @@ Status sort_digits(int *num) {
     while (*num != 0) {
         int digit = *num % 10;
         *num /= 10;
-        printf("\n%d\n", 999 / 10);
 
         if (len == 0) {
             digits[0] = digit;
@@ -113,9 +112,12 @@ Status sort_digits(int *num) {
 
         int i = 0;
         while (i < len) {
-            if (digits[i] > digit) {
+            printf("\n%d %d %d\n", digits[i], digit, digits[i] >= digit);
+            if (digits[i] >= digit) {
+                print_array(digits, len);
                 operation_status = array_insert_element(&digits, &len, i, digit);
                 if (operation_status != Success) return Failure;
+                break;
             }
 
             i++;
@@ -134,16 +136,19 @@ Status sort_digits(int *num) {
 
 Status rearrange_array(int **array, int *len) {
 
+    if (*len == 0) return Empty_array;
+
     int i = 0;
 
     while(i < *len) {
         int old = (*array)[i];
+        // printf("\nold -> %d\n", old);
         sort_digits(*array + i);
-        // printf("\n%d\n", (*array)[i]);
 
         if (old == (*array)[i]) {
             int operation_status = array_delete_element(array, len, i);
             if (operation_status != Success) return Failure;
+            printf("\nsame\n");
         } else {
             i++;
         }
@@ -162,6 +167,7 @@ int main() {
     int *array; 
     int array_len;
 
+    // at start array should be NULL
     Status operation_status = initialize_array(&array, &array_len);
     if (operation_status != Success) return Failure;
 
@@ -169,10 +175,10 @@ int main() {
     while (1) {
         printf(
             "\n----> MENU <----\n"
-            "1) Initialize array\n" // clear array
+            "1) Initialize array\n" // insert multiply elemetns in cycle // enter number of new elements/ or stop symbol
             "2) Insert new element\n"
             "3) Delete element\n"
-            "4) Individual task: rearrange numbers in elements\n"
+            "4) Individual task: rearrange numbers in elements\n" // create an array (outside: print it and destroy)
             "5) Display array content\n" // do nothing
             "\n"
             "Choose an option: "
