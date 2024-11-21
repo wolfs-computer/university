@@ -5,7 +5,7 @@
 
 
 
-Status array_init(int **arr);
+// Status array_init(int **arr);
 void print_array(const int *arr, int len);
 
 Status array_insert_element(int **arr, int *len, int index, int value);

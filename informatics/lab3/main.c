@@ -7,6 +7,7 @@
 
 
 
+// OK!
 Status get_input(int *number, int is_option_num) {
 
     int input_status = scanf("%d", number);
@@ -32,21 +33,37 @@ Status get_input(int *number, int is_option_num) {
 }
 
 
+// OK!
 Status initialize_array(int **array, int *len) {
 
-    int oper_status = array_init(array);
-
-    if (oper_status == Memory_fault) {
-        printf("Error: failed to allocate memory\n");
-        return Memory_fault;
-    }
-
     *len = 0;
+
+    printf("Enter number of elements: ");
+    int count;
+    int input_status1 = get_input(&count, 0);
+    if (input_status1 != Success) return input_status1;
+
+    int value;
+    for (int i = 0; i < count; i++) {
+
+        printf("Enter element value: ");
+        int input_status2 = get_input(&value, 0);
+        if (input_status2 != Success) return input_status2;
+
+        int oper_status = array_insert_element(array, len, i, value);
+        // printf("-> %d %d\n", *len, i);
+
+        if (oper_status == Memory_fault) {
+            printf("Error: failed to allocate memory\n");
+            return Memory_fault;
+        }
+    }
 
     return Success;
 }
 
 
+// OK!
 Status insert_element(int **array, int *len) {
 
     printf("Enter index: ");
@@ -73,6 +90,7 @@ Status insert_element(int **array, int *len) {
 }
 
 
+// OK!
 Status delete_element(int **array, int *len) {
 
     printf("Enter index: ");
@@ -90,65 +108,67 @@ Status delete_element(int **array, int *len) {
 }
 
 
-Status sort_digits(int *num) {
-    int *digits;
+Status sort_digits(int num, int *new_num) {
+
+    int *digits = NULL;
     int len = 0;
 
     int sign = 1;
-    if (*num < 0) sign = -1;
+    if (num < 0) sign = -1;
+    num *= sign;
 
-    int operation_status = initialize_array(&digits, &len);
-    if (operation_status != Success) return Failure;
+    while (num != 0) {
 
-    while (*num != 0) {
-        int digit = *num % 10;
-        *num /= 10;
-
-        if (len == 0) {
-            digits[0] = digit;
-            len = 1;
-            continue;
-        }
+        int digit = num % 10;
+        num /= 10;
 
         int i = 0;
         while (i < len) {
-            printf("\n%d %d %d\n", digits[i], digit, digits[i] >= digit);
-            if (digits[i] >= digit) {
-                print_array(digits, len);
-                operation_status = array_insert_element(&digits, &len, i, digit);
-                if (operation_status != Success) return Failure;
-                break;
-            }
 
+            if (digits[i] >= digit) break;
             i++;
         }
+
+        int operation_status = array_insert_element(&digits, &len, i, digit);
+        if (operation_status != Success) return operation_status;
     }
 
-    int new_num = 0;
+    *new_num = 0;
     for (int i = 0; i < len; i++) {
-        new_num += digits[i] * ((int) pow(10, i));
+        *new_num += digits[i] * ((int) pow(10, i));
+        // printf("%d\n", digits[i]);
     }
 
-    *num = new_num * sign;
+    free(digits);
+
+    *new_num *= sign;
 
     return Success;
 }
 
-Status rearrange_array(int **array, int *len) {
+Status rearrange_array(int **array, int *len, int **new_array, int *new_array_len) {
 
-    if (*len == 0) return Empty_array;
+    if (*len == 0) return Success;
+
+    Status operation_status;
 
     int i = 0;
-
+    int g = 0;
     while(i < *len) {
-        int old = (*array)[i];
-        // printf("\nold -> %d\n", old);
-        sort_digits(*array + i);
 
-        if (old == (*array)[i]) {
+        int old = (*array)[i];
+
+        int new;
+        operation_status = sort_digits(old, &new);
+        if (operation_status != Success) return operation_status;
+
+        operation_status = array_insert_element(new_array, new_array_len, g, new);
+        if (operation_status != Success) return operation_status;
+        g++;
+
+        if (old == new) {
             int operation_status = array_delete_element(array, len, i);
-            if (operation_status != Success) return Failure;
-            printf("\nsame\n");
+            if (operation_status != Success) return operation_status;
         } else {
             i++;
         }
@@ -164,12 +184,8 @@ int main() {
     int option_number;
     Status input_status;
 
-    int *array; 
-    int array_len;
-
-    // at start array should be NULL
-    Status operation_status = initialize_array(&array, &array_len);
-    if (operation_status != Success) return Failure;
+    int *array = NULL;
+    int array_len = 0;
 
 
     while (1) {
@@ -191,7 +207,7 @@ int main() {
 
 
         // if option_number
-        Status operation_status;
+        Status operation_status = Success;
 
         if (option_number == 1) {
             operation_status = initialize_array(&array, &array_len);
@@ -203,7 +219,15 @@ int main() {
             operation_status = delete_element(&array, &array_len);
 
         } else if (option_number == 4) {
-            operation_status = rearrange_array(&array, &array_len);
+            int *new_array = NULL;
+            int new_array_len = 0;
+
+            operation_status = rearrange_array(&array, &array_len, &new_array, &new_array_len);
+
+            print_array(new_array, new_array_len);
+            printf("\n");
+
+            free(new_array);
         }
 
         if (operation_status == Eof) break;
@@ -211,6 +235,7 @@ int main() {
 
 
         // print array anyway
+        // printf("-> %d %d\n", array_len, array[0]);
         print_array(array, array_len);
     }
 
