@@ -7,7 +7,6 @@
 
 
 
-// OK!
 Status get_input(int *number, int is_option_num) {
 
     int input_status = scanf("%d", number);
@@ -24,7 +23,7 @@ Status get_input(int *number, int is_option_num) {
         return Invalid_input;
     }
 
-    if (is_option_num && (*number < 1 && *number > 5)) {
+    if (is_option_num && (*number < 1 || *number > 5)) {
         printf("Error: incorrect value!\n");
         return Incorrect_value;
     }
@@ -33,76 +32,62 @@ Status get_input(int *number, int is_option_num) {
 }
 
 
-// OK!
 Status initialize_array(int **array, int *len) {
 
     *len = 0;
 
+    Status input_status;
+
     printf("Enter number of elements: ");
     int count;
-    int input_status1 = get_input(&count, 0);
-    if (input_status1 != Success) return input_status1;
+    input_status = get_input(&count, 0);
+    if (input_status != Success) return input_status;
 
     int value;
     for (int i = 0; i < count; i++) {
 
         printf("Enter element value: ");
-        int input_status2 = get_input(&value, 0);
-        if (input_status2 != Success) return input_status2;
+        input_status = get_input(&value, 0);
+        if (input_status != Success) return input_status;
 
-        int oper_status = array_insert_element(array, len, i, value);
-        // printf("-> %d %d\n", *len, i);
-
-        if (oper_status == Memory_fault) {
-            printf("Error: failed to allocate memory\n");
-            return Memory_fault;
-        }
+        Status oper_status = array_insert_element(array, len, i, value);
+        if (oper_status != Success) return oper_status;
     }
 
     return Success;
 }
 
 
-// OK!
 Status insert_element(int **array, int *len) {
+
+    Status input_status;
 
     printf("Enter index: ");
     int index;
-    int input_status1 = get_input(&index, 0);
-    if (input_status1 != Success) return input_status1;
+    input_status = get_input(&index, 0);
+    if (input_status != Success) return input_status;
 
     printf("Enter value: ");
     int value;
-    int input_status2 = get_input(&value, 0);
-    if (input_status2 != Success) return input_status2;
+    input_status = get_input(&value, 0);
+    if (input_status != Success) return input_status;
 
-    int oper_status = array_insert_element(array, len, index, value);
-    if (oper_status == Memory_fault) {
-        printf("Error: failed to allocate memory\n");
-        return Memory_fault;
-    }
-    if (oper_status == Invalid_index) {
-        printf("Error: incorrect index!\n");
-        return Invalid_index;
-    }
+    Status oper_status = array_insert_element(array, len, index, value);
+    if (oper_status != Success) return oper_status;
 
     return Success;
 }
 
 
-// OK!
 Status delete_element(int **array, int *len) {
 
     printf("Enter index: ");
     int index;
-    int input_status1 = get_input(&index, 0);
-    if (input_status1 != Success) return input_status1;
+    Status input_status = get_input(&index, 0);
+    if (input_status != Success) return input_status;
 
-    int oper_status = array_delete_element(array, len, index);
-    if (oper_status == Invalid_index) {
-        printf("Error: incorrect index!\n");
-        return Invalid_index;
-    }
+    Status oper_status = array_delete_element(array, len, index);
+    if (oper_status != Success) return oper_status;
 
     return Success;
 }
@@ -124,19 +109,17 @@ Status sort_digits(int num, int *new_num) {
 
         int i = 0;
         while (i < len) {
-
             if (digits[i] >= digit) break;
             i++;
         }
 
-        int operation_status = array_insert_element(&digits, &len, i, digit);
+        Status operation_status = array_insert_element(&digits, &len, i, digit);
         if (operation_status != Success) return operation_status;
     }
 
     *new_num = 0;
     for (int i = 0; i < len; i++) {
-        *new_num += digits[i] * ((int) pow(10, i));
-        // printf("%d\n", digits[i]);
+        *new_num += digits[i] * pow(10, i);
     }
 
     free(digits);
@@ -206,7 +189,7 @@ int main() {
         if (input_status != Success) continue;
 
 
-        // if option_number
+        // if just display an array
         Status operation_status = Success;
 
         if (option_number == 1) {
@@ -230,12 +213,16 @@ int main() {
             free(new_array);
         }
 
+        
+        if (operation_status == Memory_fault) printf("Error: memory fault!\n");;
+        if (operation_status == Invalid_index) printf("Error: invalid index!\n");;
+        if (operation_status == Empty_array) printf("Error: array is empty!\n");;
+
         if (operation_status == Eof) break;
         if (operation_status != Success) continue;
 
 
         // print array anyway
-        // printf("-> %d %d\n", array_len, array[0]);
         print_array(array, array_len);
     }
 
