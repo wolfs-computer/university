@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <readline/readline.h>
 #include <time.h>
+#include "my_string.h"
 
 
 
@@ -111,3 +111,4 @@ int main() {
 
     return 0;
 }
+
