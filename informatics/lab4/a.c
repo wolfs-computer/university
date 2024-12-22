@@ -2,63 +2,85 @@
 #include <stdlib.h>
 #include <string.h>
 #include <readline/readline.h>
-// #include "status.h"
+#include <time.h>
 
 
 
+void word_insert(char ***words, int **lens, int *word_count, char *word, int len) {
 
-int sinsert(int *arr, int len, int elem) {
+    (*word_count)++;
+    *lens = (int*) realloc(*lens, *word_count * sizeof(int));
+    *words = (char**) realloc(*words, *word_count * sizeof(char*));
 
-    for (int i = len - 1; i > 0; i--) {
-        if (elem < arr[i - 1]) {
-            arr[i] = arr[i - 1];
+    for (int i = *word_count - 2; i >= 0; i--) {
+        if ((*lens)[i] <= len) {
+            (*lens)[i + 1] = len;
+            (*words)[i + 1] = word;
+            return;
         } else {
-            arr[i] = elem;
-            return i;
-            break;
+            (*lens)[i + 1] = (*lens)[i];
+            (*words)[i + 1] = (*words)[i];
         }
     }
-    arr[0] = elem;
 
-    return 0;
+    (*lens)[0] = len;
+    (*words)[0] = word;
 }
 
 
+// void debug_pr(char **words, int *lens, int word_count) {
+//     for (int i = 0; i < word_count; i++) {
+//         // printf("-> ! %i\n", i);
+//         printf("%s %i | %i/%i\n", words[i], lens[i], i, word_count - 1);
+//     }
+// }
+
+
 char *new_string(const char *input) {
-    char *str;
+    int str_len = strlen(input);
+    char *str = (char*) malloc((str_len + 1) * sizeof(char)); // null at the end
     strcpy(str, input);
-    int str_len = strlen(str);
-
-    char *res = malloc((str_len + 1) * sizeof(char));
-    int res_len = 0;
-
 
     int *word_lens = NULL;
-    int *word_indexes = NULL;
+    char **word_indexes = NULL;
     int word_count = 0;
 
 
     char *word = strtok(str, " \t");
     while (word != NULL) {
-        // printf("w: %s", word);
+        // printf("-> !\n");
+        // printf("word: %s\n", word);
+
         int word_len = strlen(word);
-        res_len += word_len + 1;
-
-        word_count++;
-        word_lens = realloc(word_lens, word_count * sizeof(int));
-        sinsert(word_lens, word_count, word_len);
-
-        word_indexes = realloc(word_indexes, word_count * sizeof(int));
+        word_insert(&word_indexes, &word_lens, &word_count, word, word_len);
 
         word = strtok(NULL, " \t");
     }
-    res_len--; // no space at the end
 
-    // for (int i = 1; i < word_count; i++) {
-    //     strncpy(, str + word_lens[i - 1] + 1, );
-    // }
+    // debug_pr(word_indexes, word_lens, word_count);
+    // printf("finished sorting %i\n", word_count);
 
 
+    int res_len = 1;
+    char *res = (char*) calloc(res_len, sizeof(char));
+
+    for (int i = 0; i < word_count; i++) {
+        res_len += word_lens[i] + 1;
+        res = (char*) realloc(res, res_len * sizeof(char));
+        strcat(res, word_indexes[i]);
+        strcat(res, " ");
+    }
+
+    if (res_len > 1) {
+        res_len--;
+        res = (char*) realloc(res, res_len * sizeof(char));
+        res[res_len - 1] = '\0';
+    }
+
+    free(str);
+    free(word_lens);
+    free(word_indexes);
+    free(word);
 
     return res;
 }
@@ -72,8 +94,13 @@ int main() {
 
         printf("\"%s\"\n", input);
 
+        clock_t start = clock();
         char *output = new_string(input);
-        printf("\"%s\"\n", output);
+        clock_t stop = clock();
+        float time = (float) (stop - start) / CLOCKS_PER_SEC;
+
+        printf("time: %f\n", time);
+        printf("\"%s\"\n\n", output);
 
         free(input);
         free(output);
