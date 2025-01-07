@@ -5,12 +5,12 @@
 #include <stddef.h>
 
 
-char *readline (const char *);
+char *readline(const char *);
 
-size_t strlen (const char *s);
-char *strcat (char *dest, const char *src);
-char *strtok (char *s, const char *delim);
-char *strcpy (char *dest, const char *src);
+size_t strlen(const char *s);
+char *strcat(char *dest, const char *src);
+char *strtok(char *s, const char *delim);
+char *strcpy(char *dest, const char *src);
 
 
 #endif

@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <readline/readline.h>
 #include <time.h>
 #include "my_string.h"
+#include <readline/readline.h>
 
 
 
@@ -28,14 +28,6 @@ void word_insert(char ***words, int **lens, int *word_count, char *word, int len
 }
 
 
-// void debug_pr(char **words, int *lens, int word_count) {
-//     for (int i = 0; i < word_count; i++) {
-//         // printf("-> ! %i\n", i);
-//         printf("%s %i | %i/%i\n", words[i], lens[i], i, word_count - 1);
-//     }
-// }
-
-
 char *new_string(const char *input) {
     int str_len = strlen(input);
     char *str = (char*) malloc((str_len + 1) * sizeof(char)); // null at the end
@@ -48,17 +40,12 @@ char *new_string(const char *input) {
 
     char *word = strtok(str, " \t");
     while (word != NULL) {
-        // printf("-> !\n");
-        // printf("word: %s\n", word);
 
         int word_len = strlen(word);
         word_insert(&word_indexes, &word_lens, &word_count, word, word_len);
 
         word = strtok(NULL, " \t");
     }
-
-    // debug_pr(word_indexes, word_lens, word_count);
-    // printf("finished sorting %i\n", word_count);
 
 
     int res_len = 1;
@@ -111,4 +98,3 @@ int main() {
 
     return 0;
 }
-
