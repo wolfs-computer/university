@@ -2,7 +2,7 @@
 #define _MY_READLINE_H_
 
 
-char *readline (const char *);
+char *my_readline(const char *greet);
 
 
 #endif

@@ -1,13 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include "my_string.h"
+#include "my_readline.h"
 
 
-#define BUF_SIZE 81
 
-
-char *get_char(const char *greet) {
-    char buf[BUF_SIZE] = {0};
+char *my_readline(const char *greet) {
+    char buf[20] = {0};
     char *res = NULL;
     int len = 0;
     int n = 0;
@@ -15,27 +14,34 @@ char *get_char(const char *greet) {
     printf("%s", greet);
 
     do {
-        n = scanf("%80[^\n]", buf);
+        n = scanf("%19[^\n]", buf);
 
         if (n < 0) {
-            if (!res) {
-                return NULL;
-            }
+            // printf("-> %i\n", n);
+
+            printf("\n");
+            return NULL;
+
         } else if (n > 0) {
-            int chunk_len = strlen(buf);
+            // printf("-> %i\n", n);
+            int chunk_len = my_strlen(buf);
             int str_len = len + chunk_len;
-            res = realloc(res, str_len + 1);
-            memcpy(res + len, buf, chunk_len);
+            res = (char*) realloc(res, str_len + 1);
+            my_strcpy(res + len, buf);
             len = str_len;
+
         } else {
-            scanf("%*c");
+            // printf("-> %i\n", n);
+            // scanf("%*c");
+            scanf("%1[\n]", buf);
         }
+
     } while (n > 0);
 
     if (len > 0) {
         res[len] = '\0';
     } else {
-        res = calloc(1, sizeof(char));
+        res = (char*) calloc(1, sizeof(char));
     }
 
     return res;
@@ -43,14 +49,18 @@ char *get_char(const char *greet) {
 
 
 
-// DEBUG
-int main() {
-
-    while (1) {
-        char *input = get_char("Input string: ");
-        printf("%s\n", input);
-    }
-
-
-    return 0;
-}
+// // DEBUG
+// int main() {
+//
+//     char *input = my_readline("Input string: ");
+//
+//     while (input != NULL) {
+//         printf("%s\n", input);
+//
+//         free(input);
+//         input = my_readline("Input string: ");
+//     }
+//
+//
+//     return 0;
+// }
