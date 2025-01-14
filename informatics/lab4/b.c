@@ -3,7 +3,7 @@
 #include <time.h>
 #include "my_string.h"
 #include "my_readline.h"
-#include <string.h>
+// #include <string.h>
 
 
 
@@ -44,7 +44,7 @@ char *new_string(const char *input) {
 
         int word_len = my_strlen(word);
         word_insert(&word_indexes, &word_lens, &word_count, word, word_len);
-        printf("%s %s\n", word, word_indexes[0]);
+        // printf("%s %s\n", word, word_indexes[0]);
 
         word = my_strtok(NULL, " \t");
     }
@@ -56,9 +56,12 @@ char *new_string(const char *input) {
     for (int i = 0; i < word_count; i++) {
         res_len += word_lens[i] + 1;
         res = (char*) realloc(res, res_len * sizeof(char));
-        // printf("%s\n", str);
-        strcat(res, word_indexes[i]);
-        strcat(res, " ");
+        // if (!res) exit(1);
+        // res[0] = '\0';
+        // printf("\"%d\"\n", res[0] == '\0');
+        my_strcat(res, word_indexes[i]);
+        // printf("%d\n", my_strlen(" "));
+        my_strcat(res, " ");
         // printf("%s\n", res);
     }
 
