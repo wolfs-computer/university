@@ -39,9 +39,7 @@ char *my_strcat(char *dest, const char *src) {
 
 
 int check_delim(const char *delim, const char c) {
-    // printf("!!\n");
     while (*delim) {
-        // printf("-> \'%c\'\n", *delim);
         if (*delim == c) return 1;
         delim++;
     }
