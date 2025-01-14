@@ -15,12 +15,15 @@ char *my_readline(const char *greet) {
 
     do {
         n = scanf("%19[^\n]", buf);
+        // printf("sdf\n");
 
-        if (n < 0) {
+        if (n < 0) { // EOF
             // printf("-> %i\n", n);
 
+            // scanf("%19[^\n]", buf);
             printf("\n");
-            return NULL;
+            // return NULL;
+            break;
 
         } else if (n > 0) {
             // printf("-> %i\n", n);
@@ -37,6 +40,12 @@ char *my_readline(const char *greet) {
         }
 
     } while (n > 0);
+
+    // text + EOF
+    if (n < 0) {
+        free(res);
+        return NULL;
+    }
 
     if (len > 0) {
         res[len] = '\0';
