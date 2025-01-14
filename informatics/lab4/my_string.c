@@ -52,39 +52,27 @@ int check_delim(const char *delim, const char c) {
 char *my_strtok(char *s, const char *delim) {
 
     static char* str;
-    static int s_pos;
 
-    if (s != NULL) {
-        str = (char*) calloc(my_strlen(s) + 1, sizeof(char));
-        s_pos = 0;
-        my_strcpy(str, s);
-    }
+    if (s != NULL) str = s;
 
-    // printf("\"%c\"\n", str[s_pos]);
-    if (!delim || str[s_pos] == '\0') {
-        // free(str);
-        return NULL;
-    }
+    if (!delim || *str == '\0') return NULL;
 
 
-    while (str[s_pos] != '\0' && check_delim(delim, str[s_pos])) s_pos++;
+    while (*str != '\0' && check_delim(delim, *str)) str++;
 
-    if (str[s_pos] == '\0') {
-        // free(str);
-        return NULL;
-    }
+    if (*str == '\0') return NULL;
     // now on first char of token
 
 
-    char *token = str + s_pos;
-    s_pos++;
+    char *token = str;
+    str++;
 
-    while (str[s_pos] != '\0' && !check_delim(delim, str[s_pos])) s_pos++;
+    while (*str != '\0' && !check_delim(delim, *str)) str++;
     // start of delim or \0
 
-    if (str[s_pos] != '\0') {
-        str[s_pos] = '\0';
-        s_pos++;
+    if (*str != '\0') {
+        *str = '\0';
+        str++;
     }
 
     return token;
