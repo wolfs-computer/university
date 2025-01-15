@@ -27,25 +27,42 @@ void word_insert(char ***words, int **lens, int *word_count, char *word, int len
     (*words)[0] = word;
 }
 
+
+// void debug_pr(char **words, int *lens, int word_count) {
+//     for (int i = 0; i < word_count; i++) {
+//         // printf("-> ! %i\n", i);
+//         printf("%s %i | %i/%i\n", words[i], lens[i], i, word_count - 1);
+//     }
+// }
+
+
 char *new_string(const char *input) {
     int str_len = strlen(input);
-    char *str = (char*) malloc((str_len + 1) * sizeof(char));
+    char *str = (char*) malloc((str_len + 1) * sizeof(char)); // null at the end
     strcpy(str, input);
 
     int *word_lens = NULL;
     char **word_indexes = NULL;
     int word_count = 0;
 
+
     char *word = strtok(str, " \t");
     while (word != NULL) {
+        // printf("-> !\n");
+        // printf("word: %s\n", word);
+
         int word_len = strlen(word);
         word_insert(&word_indexes, &word_lens, &word_count, word, word_len);
 
         word = strtok(NULL, " \t");
     }
 
+    // debug_pr(word_indexes, word_lens, word_count);
+    // printf("finished sorting %i\n", word_count);
+
+
     int res_len = 1;
-    char *res = (char*) calloc(res_len, sizeof(char));
+    char *res = (char*) calloc(res_len, sizeof(char)); // add null
 
     for (int i = 0; i < word_count; i++) {
         res_len += word_lens[i] + 1;
@@ -90,6 +107,7 @@ int main() {
 
         input = readline("Input string: ");
     }
+
 
     return 0;
 }

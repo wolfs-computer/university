@@ -16,11 +16,14 @@ char *my_readline(const char *greet) {
     do {
         n = scanf("%19[^\n]", buf);
 
-        if (n < 0) {
+        if (n < 0) { // EOF
+            // printf("-> %i\n", n);
+
             printf("\n");
-            break;
+            break; // not return NULL in case of text + EOF, not just EOF
 
         } else if (n > 0) {
+            // printf("-> %i\n", n);
             int chunk_len = my_strlen(buf);
             int str_len = len + chunk_len;
             res = (char*) realloc(res, str_len + 1);
@@ -28,11 +31,14 @@ char *my_readline(const char *greet) {
             len = str_len;
 
         } else {
+            // printf("-> %i\n", n);
+            // scanf("%*c");
             scanf("%1[\n]", buf);
         }
 
     } while (n > 0);
 
+    // text + EOF
     if (n < 0) {
         free(res);
         return NULL;
@@ -46,3 +52,21 @@ char *my_readline(const char *greet) {
 
     return res;
 }
+
+
+
+// // DEBUG
+// int main() {
+//
+//     char *input = my_readline("Input string: ");
+//
+//     while (input != NULL) {
+//         printf("%s\n", input);
+//
+//         free(input);
+//         input = my_readline("Input string: ");
+//     }
+//
+//
+//     return 0;
+// }

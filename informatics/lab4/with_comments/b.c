@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <readline/readline.h>
 #include <time.h>
+#include "my_string.h"
+#include "my_readline.h"
+// #include <string.h>
 
 
 
@@ -27,31 +28,41 @@ void word_insert(char ***words, int **lens, int *word_count, char *word, int len
     (*words)[0] = word;
 }
 
+
 char *new_string(const char *input) {
-    int str_len = strlen(input);
-    char *str = (char*) malloc((str_len + 1) * sizeof(char));
-    strcpy(str, input);
+    int str_len = my_strlen(input);
+    char *str = (char*) malloc((str_len + 1) * sizeof(char)); // null at the end
+    my_strcpy(str, input);
 
     int *word_lens = NULL;
     char **word_indexes = NULL;
     int word_count = 0;
 
-    char *word = strtok(str, " \t");
-    while (word != NULL) {
-        int word_len = strlen(word);
-        word_insert(&word_indexes, &word_lens, &word_count, word, word_len);
 
-        word = strtok(NULL, " \t");
+    char *word = my_strtok(str, " \t");
+    while (word != NULL) {
+
+        int word_len = my_strlen(word);
+        word_insert(&word_indexes, &word_lens, &word_count, word, word_len);
+        // printf("%s %s\n", word, word_indexes[0]);
+
+        word = my_strtok(NULL, " \t");
     }
 
+
     int res_len = 1;
-    char *res = (char*) calloc(res_len, sizeof(char));
+    char *res = (char*) calloc(res_len, sizeof(char)); // add null
 
     for (int i = 0; i < word_count; i++) {
         res_len += word_lens[i] + 1;
         res = (char*) realloc(res, res_len * sizeof(char));
-        strcat(res, word_indexes[i]);
-        strcat(res, " ");
+        // if (!res) exit(1);
+        // res[0] = '\0';
+        // printf("\"%d\"\n", res[0] == '\0');
+        my_strcat(res, word_indexes[i]);
+        // printf("%d\n", my_strlen(" "));
+        my_strcat(res, " ");
+        // printf("%s\n", res);
     }
 
     if (res_len > 1) {
@@ -71,7 +82,7 @@ char *new_string(const char *input) {
 
 int main() {
 
-    char *input = readline("Input string: ");
+    char *input = my_readline("Input string: ");
 
     while (input != NULL) {
 
@@ -88,8 +99,9 @@ int main() {
         free(input);
         free(output);
 
-        input = readline("Input string: ");
+        input = my_readline("Input string: ");
     }
+
 
     return 0;
 }
