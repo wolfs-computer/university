@@ -118,18 +118,22 @@ int main(int argc, char **argv) {
     // i -- input method (std, txt, bin)
     // o -- output method (std, txt, bin)
 
-    a -- algorithm (1, 2, 3)
+    // a -- algorithm (1, 2, 3)
     f -- fields of the structure (1, 2, 3) plain string (32)
     d -- sort direction (-, +)
     */
 
+    // opts in seperate file
+    // opts enum make a structure to pass to opts function
 
     Opt input = FLOW_STD;
     Opt output = FLOW_STD;
-    Opt algorithm = ALGO_COMB;
 
     char *input_filename = NULL;
     char *output_filename = NULL;
+
+    Opt algorithm = ALGO_NO;
+    int field = 0;
 
     int len = 0;
 
@@ -140,38 +144,39 @@ int main(int argc, char **argv) {
         switch (c) {
             case 'h':
                 printf(
-                   "h -- display this help message\n\n"
-                   "Input/Output:\n"
-                   "i -- input method (std, txt, bin)\n"
-                   "    Usage: -i METHOD,FILENAME\n"
-                   "    Default: std\n"
-                   "    [Example: -i txt,input.txt]\n\n"
-                   "o -- output method (std, txt, bin)\n"
-                   "    Usage: -o METHOD,FILENAME\n"
-                   "    Default: std\n"
-                   "    [Example: -o txt,output.txt]\n\n"
-                   "Sorting:\n"
-                   "a -- algorithm (0, 1, 2, 3)\n"
-                   "    0 -> no sort\n"
-                   "    1 -> comb sort\n"
-                   "    2 -> heap sort\n"
-                   "    3 -> qsort\n"
-                   "    Usage: -a ALGORITHM\n"
-                   "    Default: 0\n"
-                   "    [Example: -a 2]\n\n"
-                   "f -- fields of the structure (1, 2, 3)\n"
-                   "    Can be combined like 23, 12.\n"
-                   "    Usage: -f [FIELD1][FIELD2][FIELD3]\n"
-                   "    Default: 1\n"
-                   "    [Example: -f 23]\n\n"
-                   "d -- sort direction (-, +)\n"
-                   "    Usage: -d DIRECTION\n"
-                   "    Default: +\n"
-                   "    [Example: -d -]\n"
+                    "h -- display this help message\n\n"
+                    "Input/Output:\n"
+                    "i -- input method (std, txt, bin)\n"
+                    "    Usage: -i METHOD,FILENAME\n"
+                    "    Default: std\n"
+                    "    [Example: -i txt,input.txt]\n\n"
+                    "o -- output method (std, txt, bin)\n"
+                    "    Usage: -o METHOD,FILENAME\n"
+                    "    Default: std\n"
+                    "    [Example: -o txt,output.txt]\n\n"
+                    "Sorting:\n"
+                    "a -- algorithm (0, 1, 2, 3)\n"
+                    "    0 -> no sort\n"
+                    "    1 -> comb sort\n"
+                    "    2 -> heap sort\n"
+                    "    3 -> qsort\n"
+                    "    Usage: -a ALGORITHM\n"
+                    "    Default: 0\n"
+                    "    [Example: -a 2]\n\n"
+                    "f -- fields of the structure (1, 2, 3)\n"
+                    "    Can be combined like 23, 12.\n"
+                    "    Usage: -f [FIELD1][FIELD2][FIELD3]\n"
+                    "    Default: 1\n"
+                    "    [Example: -f 23]\n\n"
+                    "d -- sort direction (-, +)\n"
+                    "    Usage: -d DIRECTION\n"
+                    "    Default: +\n"
+                    "    [Example: -d -]\n"
                 );
                 return 0;
                 break;
 
+            // input
             case 'i':
                 len = strlen(optarg);
 
@@ -199,6 +204,7 @@ int main(int argc, char **argv) {
 
                 break;
 
+            // output
             case 'o':
                 len = strlen(optarg);
 
@@ -226,6 +232,34 @@ int main(int argc, char **argv) {
 
                 break;
 
+            // algorithm
+            case 'a':
+                len = strlen(optarg);
+
+                if (len != 1) {
+                    fprintf(stderr, "[Error] Invalid argument for -a.\n");
+                    break;
+                }
+
+                if (optarg[0] == '1') algorithm = ALGO_COMB;
+                else if (optarg[0] == '2') algorithm = ALGO_HEAP;
+                else if (optarg[0] == '3') algorithm = ALGO_QSORT;
+
+                break;
+
+            case 'f':
+                len = strlen(optarg);
+
+                if (len != 1) {
+                    fprintf(stderr, "[Error] Invalid argument for -f.\n");
+                    break;
+                }
+
+                if (optarg[0] == '2') field = 1;
+                else if (optarg[0] == '3') field = 2;
+
+                break;
+
             case '?':
                 // printf("opt ? -- %s\n", optarg);
                 if (strchr("ioafd", optopt) != NULL) {
@@ -245,6 +279,8 @@ int main(int argc, char **argv) {
 
     printf("output source -- %d\n", output);
     printf("output filename -- %s\n", output_filename);
+
+    printf("algorithm -- %d\n", algorithm);
 
 
 
