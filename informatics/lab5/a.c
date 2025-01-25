@@ -130,7 +130,7 @@ int main(int argc, char **argv) {
         .output = FLOW_STD,
 
         .input_filename = NULL,
-        .output_filename = NULL, // "out"
+        .output_filename = NULL,
 
         .algorithm = ALGO_NO,
         .field = 0,
@@ -138,6 +138,14 @@ int main(int argc, char **argv) {
     };
 
     parse_opts(argc, argv, &opts);
+
+
+
+    // input
+    // output
+    // algo
+
+
 
     // DEBUG
     DEBUG_opts(opts);

@@ -12,6 +12,9 @@ typedef enum _Status {
     Invalid_arg,
     File_open_fault,
 
+    // data_io
+    Invalid_data,
+
 } Status;
 
 

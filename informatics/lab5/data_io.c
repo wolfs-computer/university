@@ -5,18 +5,24 @@
 #include "status.h"
 
 
-// return status
+// return Status
+
 // check file format
+// in-place check
+
 // field 1 size correction to 9
 
-// general format checker
-// in-place check
 
 
 // Status data_check
 
 
-void data_write_std(Data *data, int data_len) {
+
+//################################################=-> std <-=################################################//
+
+
+
+void data_write_std(const Data *data, const int data_len) {
     printf("%d\n", data_len);
 
     for (int i = 0; i < data_len; i++) {
@@ -64,7 +70,22 @@ void data_read_std(Data **data, int *data_len) {
 }
 
 
-void data_write_text(char *filename, Data *data, int data_len) {
+static int does_file_exists(const char *filename) {
+    FILE *f;
+    if ((f = fopen(filename, "r"))) {
+        fclose(f);
+        return 1;
+    }
+    return 0;
+}
+
+
+
+//################################################=-> txt <-=################################################//
+
+
+
+void data_write_text(const char *filename, const Data *data, const int data_len) {
     FILE *f = fopen(filename, "w");
 
     fprintf(f, "%d\n", data_len);
@@ -77,9 +98,12 @@ void data_write_text(char *filename, Data *data, int data_len) {
     fclose(f);
 }
 
-void data_read_text(char *filename, Data **data, int *data_len) {
+// start here <<<<----
+
+Status data_read_text(const char *filename, Data **data, int *data_len) {
+    if (!does_file_exists(filename)) return File_open_fault;
+
     FILE *f = fopen(filename, "r");
-    // if (!f) printf("fail");
 
     fscanf(f, "%d\n", data_len);
     // printf("%d\n", *data_len);
@@ -112,7 +136,13 @@ void data_read_text(char *filename, Data **data, int *data_len) {
     fclose(f);
 }
 
-void data_write_bin(char *filename, Data *data, int data_len) {
+
+
+//################################################=-> bin <-=################################################//
+
+
+
+Status data_write_bin(const char *filename, const Data *data, const int data_len) {
     FILE *f = fopen(filename, "w+b");
 
     fwrite(&data_len, sizeof(data_len), 1, f);
@@ -131,7 +161,7 @@ void data_write_bin(char *filename, Data *data, int data_len) {
     fclose(f);
 }
 
-void data_read_bin(char *filename, Data **data, int *data_len) {
+Status data_read_bin(const char *filename, Data **data, int *data_len) {
     FILE *f = fopen(filename, "r+b");
 
     fread(data_len, sizeof(*data_len), 1, f);

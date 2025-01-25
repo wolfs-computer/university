@@ -8,7 +8,7 @@
 
 
 
-static int does_file_exists(char *filename) {
+static int does_file_exists(const char *filename) {
     FILE *f;
     if ((f = fopen(filename, "r"))) {
         fclose(f);
@@ -27,7 +27,7 @@ static Status opt_i(char *optarg, Opt_data *opts, int len) {
     if (!does_file_exists(optarg + 4)) return File_open_fault;
 
     opts->input_filename = (char*) calloc(len - 4, sizeof(char));
-    strcat(opts->input_filename, optarg + 4);
+    strcpy(opts->input_filename, optarg + 4);
 
     if (!strncmp(optarg, "txt", 3)) opts->input = FLOW_FILE_TXT;
     else if (!strncmp(optarg, "bin", 3)) opts->input = FLOW_FILE_BIN;
@@ -48,7 +48,7 @@ static Status opt_o(char *optarg, Opt_data *opts, int len) {
     else return Invalid_arg;
 
     opts->output_filename = (char*) calloc(len - 4, sizeof(char));
-    strcat(opts->output_filename, optarg + 4);
+    strcpy(opts->output_filename, optarg + 4);
 
     return Success;
 }
