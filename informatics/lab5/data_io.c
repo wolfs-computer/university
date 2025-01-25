@@ -9,6 +9,9 @@
 // check file format
 // field 1 size correction to 9
 
+// general format checker
+// in-place check
+
 
 // Status data_check
 

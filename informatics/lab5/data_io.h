@@ -2,8 +2,10 @@
 #define _DATA_IO_H_
 
 
+#define ID_LEN 9
+
 typedef struct _Data {
-    char id[9];
+    char id[ID_LEN];
     char *name;
     unsigned int quantity;
 } Data;

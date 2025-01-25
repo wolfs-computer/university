@@ -2,9 +2,6 @@
 #define _OPT_PARSER_H_
 
 
-#include "status.h"
-
-
 typedef enum _Opt {
     FLOW_STD = 0,
     FLOW_FILE_TXT = 1,
