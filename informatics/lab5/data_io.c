@@ -79,6 +79,15 @@ static int does_file_exists(const char *filename) {
     return 0;
 }
 
+static int does_file_end(FILE *f) {
+    long start_pos = ftell(f);
+    if (fseek(f, 0, SEEK_END) == start_pos) {
+        return 1;
+    }
+    fseek(f, start_pos, SEEK_SET);
+    return 0;
+}
+
 
 
 //################################################=-> txt <-=################################################//
@@ -98,24 +107,38 @@ void data_write_text(const char *filename, const Data *data, const int data_len)
     fclose(f);
 }
 
-// start here <<<<----
 
 Status data_read_text(const char *filename, Data **data, int *data_len) {
     if (!does_file_exists(filename)) return File_open_fault;
 
     FILE *f = fopen(filename, "r");
 
+    *data_len = 1;
     fscanf(f, "%d\n", data_len);
-    // printf("%d\n", *data_len);
+    if (*data_len < 1 || does_file_end(f)) {
+        fclose(f);
+        return Data_format_fault;
+    }
 
     for (int i = 0; i < *data_len; i++) {
-        // printf("!!\n");
         *data = (Data*) realloc(*data, (i + 1) * sizeof(Data));
-        // if (!data) exit(1);
+        if (!data) return Memory_fault;
 
-        // always 8
-        fscanf(f, "%s\n", (*data)[i].id);
-        // printf("%s\n", (*data)[i].str);
+        for (int g = 0; g < ID_LEN - 1; g++) {
+            char c = getc(f);
+            if (c == '\n') { // if too little
+                fprintf(stderr, "[Error] Invalid data field in input file.\n");
+                (*data)[i].id[0] = '\0'; // erase field 1
+                break;
+            }
+        }
+        if (getc(f) == '\n') (*data)[i].id[ID_LEN - 1] = '\0';
+        else { // if too much
+            fprintf(stderr, "[Error] Invalid data field in input file.\n");
+            (*data)[i].id[0] = '\0'; // erase field 1
+        }
+
+        if (does_file_end(f)) return Data_format_fault;
 
         (*data)[i].name = NULL;
         int l = 1;
