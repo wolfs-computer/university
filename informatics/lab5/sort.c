@@ -72,9 +72,9 @@ int comp_f3_down(const void *a, const void *b) {
 //################################################=-> Sort functions <-=################################################//
 
 
+
 #define COMB_SHRINK 0.7
 
-// this works
 void swap(void *a, void *b, size_t size) {
     void *tmp = malloc(size);
 
@@ -89,26 +89,19 @@ void comb_sort(void *ptr, size_t count, size_t size, int (*comp)(const void*, co
     int gap = count;
     int swapped = 1;
 
-    while (gap != 1 || swapped) {
+    while (gap > 1 || swapped) {
 
-        for (int i = 0; i < count; i++) {
-            printf("%d ", ((Data*) ptr)[i].quantity);
-        }
-        printf("\n");
-
-        // gap = gap * COMB_SHRINK;
-        gap = (gap * 10) / 13;
+        gap = gap * COMB_SHRINK;
         if (gap < 1) gap = 1;
-        printf("gap -- %d\n", gap);
 
         swapped = 0;
 
         // compare all elements within current gap
         for (int i = 0; i < count - gap; i++) {
-            // if (data[i] > data[i + gap]){
 
-            // printf("%d %d\n", ((Data*) ptr)[i].quantity, ((Data*) ptr)[i + gap].quantity);
-            if (comp((char*) ptr + i * size, (char*) ptr + (i + gap) * size)) {
+            // if (data[i] > data[i + gap]){
+            if (comp((char*) ptr + i * size, (char*) ptr + (i + gap) * size) > 0) {
+                // printf("%d %d %d\n", ((Data*) ptr)[i].quantity, ((Data*) ptr)[i + gap].quantity, comp((char*) ptr + i * size, (char*) ptr + (i + gap) * size));
 
                 // swap
                 // because char == 1 byte
@@ -117,7 +110,6 @@ void comb_sort(void *ptr, size_t count, size_t size, int (*comp)(const void*, co
                 swapped = 1;
             }
         }
-        // break;
     }
 }
 
@@ -137,13 +129,13 @@ void heapify(void *ptr, size_t count, size_t size, int i, int (*comp)(const void
 
     // If left child is larger than largest
     // if (lt < count && ((char*) ptr + lt * size) > ((char*) ptr + largest * size)) {
-    if (lt < count && comp((char*) ptr + lt * size, (char*) ptr + largest * size)) {
+    if (lt < count && comp((char*) ptr + lt * size, (char*) ptr + largest * size) > 0) {
         largest = lt;
     }
 
     // If right child is larger than largest
     // if (rt < count && ((char*) ptr + rt * size) > ((char*) ptr + largest * size)) {
-    if (rt < count && comp((char*) ptr + rt * size, (char*) ptr + largest * size)) {
+    if (rt < count && comp((char*) ptr + rt * size, (char*) ptr + largest * size) > 0) {
         largest = rt;
     }
 
@@ -175,45 +167,42 @@ void heap_sort(void *ptr, size_t count, size_t size, int (*comp)(const void*, co
 
 
 
-int main() {
-
-    Data a = {
-        "0",
-        "random random!",
-        772
-    };
-
-    Data b = {
-        "b",
-        "S T R I N G",
-        1
-    };
-
-    Data c = {
-        "c",
-        "G",
-        11
-    };
-
-    Data l1[] = {a, c, b};
-    int l1_len = 3;
-
-    // printf("!\n");
-
-    // qsort(l1, l1_len, sizeof(Data), comp_f3_up);
-    // comb_sort(l1, l1_len, sizeof(Data), comp_f3_up);
-    heap_sort(l1, l1_len, sizeof(Data), comp_f3_up);
-
-    // printf("!\n");
-
-    // data_write_std(l1, l1_len);
-    for (int i = 0; i < l1_len; i++) {
-        printf("%d\n", i);
-        printf("id -- %s\n", l1[i].id);
-        printf("name -- %s\n", l1[i].name);
-        printf("quantity -- %d\n", l1[i].quantity);
-    }
-
-
-    return 0;
-}
+// int main() {
+//
+//     Data a = {
+//         "0",
+//         "random random!",
+//         772
+//     };
+//
+//     Data b = {
+//         "b",
+//         "S T R I N G",
+//         1
+//     };
+//
+//     Data c = {
+//         "c",
+//         "G",
+//         11
+//     };
+//
+//     Data l1[] = {a, c, b};
+//     int l1_len = 3;
+//
+//
+//     // qsort(l1, l1_len, sizeof(Data), comp_f3_up);
+//     comb_sort(l1, l1_len, sizeof(Data), comp_f3_up);
+//     // heap_sort(l1, l1_len, sizeof(Data), comp_f3_up);
+//
+//
+//     for (int i = 0; i < l1_len; i++) {
+//         printf("%d\n", i);
+//         printf("id -- %s\n", l1[i].id);
+//         printf("name -- %s\n", l1[i].name);
+//         printf("quantity -- %d\n", l1[i].quantity);
+//     }
+//
+//
+//     return 0;
+// }
