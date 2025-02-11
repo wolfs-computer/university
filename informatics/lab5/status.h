@@ -13,6 +13,7 @@ typedef enum _Status {
     File_open_fault,
 
     // data_io
+    Invalid_input,
     Data_format_fault,
 
 } Status;

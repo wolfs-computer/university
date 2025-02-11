@@ -32,39 +32,85 @@ void data_write_std(const Data *data, const int data_len) {
     }
 }
 
+
+static Status get_2nd_field(FILE *stream, Data data) {
+
+    char c = getc(stream);
+    int i = 0;
+    for (; (c != '\n' || c != EOF) && i < ID_LEN - 1; i++) {
+        data.name[i] = c;
+        c = getc(stream);
+    }
+    if (i < ID_LEN - 1) return Invalid_input;
+    data.name[ID_LEN - 1] = '\0';
+
+    return Success;
+}
+
+static void get_3rd_field(FILE *stream, Data data) {
+
+    data.name = NULL;
+
+    char c = getc(stream);
+    int i = 0;
+    for (; c != '\n' || c != EOF; i++) {
+        data.name = (char*) realloc(data.name, (i + 1) * sizeof(char));
+        data.name[i] = c;
+        c = getc(stream);
+    }
+    data.name = (char*) realloc(data.name, (i + 1) * sizeof(char));
+    data.name[i] = '\0';
+}
+
+
 void data_read_std(Data **data, int *data_len) {
-    // make it normal
 
     printf("Enter number of structs: ");
     scanf("%d", data_len);
-    printf("%d\n", *data_len);
+    while (*data_len == EOF) {
+        fprintf(stderr, "[Error] Invalid input.\n");
+        scanf("%d", data_len);
+    }
+    // printf("%d\n", *data_len);
+
+    Status st;
 
     for (int i = 0; i < *data_len; i++) {
-        // printf("!!\n");
+        printf("Struct %d\n", i);
+
         *data = (Data*) realloc(*data, (i + 1) * sizeof(Data));
-        // if (!data) exit(1);
 
         // always 8
-        printf("name: ");
-        scanf("%8s", (*data)[i].id);
+        printf("id: ");
+        Status st = get_2nd_field(stdin, (*data)[i]);
+        while (st != Success) {
+            fprintf(stderr, "[Error] Invalid input.\n");
+            Status st = get_2nd_field(stdin, (*data)[i]);
+        }
+        // scanf("%8s", (*data)[i].id);
         // printf("%s\n", (*data)[i].str);
 
         printf("name: ");
-        (*data)[i].name = NULL;
-        int l = 1;
-        char c = getchar();
-        while (c != '\n') {
-            (*data)[i].name = (char*) realloc((*data)[i].name, (l + 1) * sizeof(char));
-            (*data)[i].name[l - 1] = c;
-            c = getchar();
-            l++;
-        }
-        (*data)[i].name[l - 1] = '\0';
-        printf("\n");
+        get_3rd_field(stdin, (*data)[i]);
+        // (*data)[i].name = NULL;
+        // int l = 1;
+        // char c = getchar();
+        // while (c != '\n') {
+        //     (*data)[i].name = (char*) realloc((*data)[i].name, (l + 1) * sizeof(char));
+        //     (*data)[i].name[l - 1] = c;
+        //     c = getchar();
+        //     l++;
+        // }
+        // (*data)[i].name[l - 1] = '\0';
+        // printf("\n");
         // printf("%s\n", (*data)[i].name);
 
         printf("quantity: ");
         scanf("%d", &((*data)[i].quantity));
+        while ((*data)[i].quantity == EOF) {
+            fprintf(stderr, "[Error] Invalid input.\n");
+            scanf("%d", &((*data)[i].quantity));
+        }
         // printf("%d\n", (*data)[i].quantity);
     }
 }
@@ -212,4 +258,25 @@ Status data_read_bin(const char *filename, Data **data, int *data_len) {
     }
 
     fclose(f);
+}
+
+
+
+int main() {
+
+    Data *data = NULL;
+    int data_len = 0;
+
+    data_read_std(&data, &data_len);
+
+
+    for (int i = 0; i < data_len; i++) {
+        printf("%s\n", data[i].id);
+        printf("%s\n", data[i].name);
+        printf("%d\n", data[i].quantity);
+        free(data[i].name);
+    }
+    free(data);
+
+    return 0;
 }
