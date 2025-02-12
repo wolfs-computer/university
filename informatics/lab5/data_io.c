@@ -33,17 +33,6 @@ void data_write_std(const Data *data, const int data_len) {
 }
 
 
-// static void get_number(int *num) {
-//     scanf("%d", num);
-//
-//     while (*num != 1) {
-//         fprintf(stderr, "[Error] Invalid input.\n");
-//         scanf("%d", data_len);
-//     }
-//     while (getchar() != '\n');
-// }
-
-
 // error --> print error --> continue with zero/spaces/default value
 
 
@@ -98,12 +87,13 @@ static void get_number(FILE *stream, int *num) {
         }
     }
 
+    // while (getc(stream) != '\n');
+
     if (status != 1 || *num < 1) {
         fprintf(stderr, "[Error] Invalid input.\n");
         *num = 1;
     }
 
-    // while (getc(stream) != '\n');
 }
 
 
@@ -118,6 +108,7 @@ void data_read_std(Data **data, int *data_len) {
     //
     // while (getc(stdin) != '\n');
     get_number(stdin, data_len);
+    // printf("!!\n");
 
     // scanf("%d", data_len);
     // while (getchar() != '\n');

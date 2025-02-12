@@ -3,6 +3,7 @@
 #include "status.h"
 #include "data_io.h"
 #include "opt_parser.h"
+#include "sort.h"
 
 
 
@@ -139,18 +140,40 @@ int main(int argc, char **argv) {
     parse_opts(argc, argv, &opts);
 
 
-
-    // input
-    // output
-    // algo
-
-
-
     // DEBUG
     DEBUG_opts(opts);
 
-
     // DEBUG_data();
+
+
+
+    Data *data = NULL;
+    int data_len = 0;
+
+    // input
+    if (opts.input == FLOW_STD) data_read_std(&data, &data_len);
+    else if (opts.input == FLOW_FILE_TXT) data_read_text(opts.input_filename, &data, &data_len);
+    else if (opts.input == FLOW_FILE_BIN) data_read_bin(opts.input_filename, &data, &data_len);
+
+    // fields
+    int (*comps[6])(const void*, const void*) = {
+        comp_f1_up,
+        comp_f1_down,
+        comp_f2_up,
+        comp_f2_down,
+        comp_f3_up,
+        comp_f3_down,
+    };
+
+    // algo
+    if (opts.algorithm == ALGO_QSORT) qsort(data, data_len, sizeof(Data), comps[opts.field * 2 + opts.direction]);
+    else if (opts.algorithm == ALGO_COMB) comb_sort(data, data_len, sizeof(Data), comps[opts.field * 2 + opts.direction]);
+    else if (opts.algorithm == ALGO_HEAP) heap_sort(data, data_len, sizeof(Data), comps[opts.field * 2 + opts.direction]);
+
+    // output
+    if (opts.output == FLOW_STD) data_write_std(data, data_len);
+    else if (opts.output == FLOW_FILE_TXT) data_write_text(opts.input_filename, data, data_len);
+    else if (opts.output == FLOW_FILE_BIN) data_write_bin(opts.input_filename, data, data_len);
 
 
 

@@ -75,7 +75,7 @@ int comp_f3_down(const void *a, const void *b) {
 
 #define COMB_SHRINK 0.7
 
-void swap(void *a, void *b, size_t size) {
+static void swap(void *a, void *b, size_t size) {
     void *tmp = malloc(size);
 
     memcpy(tmp, a, size);
@@ -115,7 +115,7 @@ void comb_sort(void *ptr, size_t count, size_t size, int (*comp)(const void*, co
 
 
 
-void heapify(void *ptr, size_t count, size_t size, int i, int (*comp)(const void*, const void*)) {
+static void heapify(void *ptr, size_t count, size_t size, int i, int (*comp)(const void*, const void*)) {
 
     // root
     int largest = i;
