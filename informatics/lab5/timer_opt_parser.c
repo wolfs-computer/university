@@ -3,55 +3,10 @@
 #include <string.h>
 #include <unistd.h>
 #include <ctype.h> // for isprint()
-#include "opt_parser.h"
+#include "timer_opt_parser.h"
 #include "status.h"
 
 
-
-static int does_file_exists(const char *filename) {
-    FILE *f;
-    if ((f = fopen(filename, "r"))) {
-        fclose(f);
-        return 1;
-    }
-    return 0;
-}
-
-static Status opt_i(char *optarg, Opt_data *opts, int len) {
-    if (len < 3) return Invalid_arg;
-
-    if (!strncmp(optarg, "std", 3)) return Success;
-
-    if (len < 5) return Invalid_arg;
-
-    if (!does_file_exists(optarg + 4)) return File_open_fault;
-
-    opts->input_filename = (char*) calloc(len - 4, sizeof(char));
-    strcpy(opts->input_filename, optarg + 4);
-
-    if (!strncmp(optarg, "txt", 3)) opts->input = FLOW_FILE_TXT;
-    else if (!strncmp(optarg, "bin", 3)) opts->input = FLOW_FILE_BIN;
-    else return Invalid_arg;
-
-    return Success;
-}
-
-static Status opt_o(char *optarg, Opt_data *opts, int len) {
-    if (len < 3) return Invalid_arg;
-
-    if (!strncmp(optarg, "std", 3)) return Success;
-
-    if (len < 5) return Invalid_arg;
-
-    if (!strncmp(optarg, "txt", 3)) opts->output = FLOW_FILE_TXT;
-    else if (!strncmp(optarg, "bin", 3)) opts->output = FLOW_FILE_BIN;
-    else return Invalid_arg;
-
-    opts->output_filename = (char*) calloc(len - 4, sizeof(char));
-    strcpy(opts->output_filename, optarg + 4);
-
-    return Success;
-}
 
 static Status opt_a(char *optarg, Opt_data *opts, int len) {
     if (len != 1) return Invalid_arg;
@@ -85,6 +40,26 @@ static Status opt_d(char *optarg, Opt_data *opts, int len) {
     return Success;
 }
 
+static Status opt_e(char *optarg, Opt_data *opts, int len) {
+    int count = atoi(optarg);
+
+    if (count < 1 || len == 0) return Invalid_arg;
+
+    opts->element_count = count;
+
+    return Success;
+}
+
+static Status opt_c(char *optarg, Opt_data *opts, int len) {
+    int count = atoi(optarg);
+
+    if (count < 1 || len == 0) return Invalid_arg;
+
+    opts->count = count;
+
+    return Success;
+}
+
 
 void parse_opts(int argc, char **argv, Opt_data *opts) {
     opterr = 0; // disable getopt error messages
@@ -94,7 +69,7 @@ void parse_opts(int argc, char **argv, Opt_data *opts) {
 
     Status opt_status;
 
-    while ((c = getopt(argc, argv, "hi:o:a:f:d:")) != -1) {
+    while ((c = getopt(argc, argv, "ha:f:d:e:c:")) != -1) {
         // printf("!\n");
         if (c != 'h' && optarg != NULL) len = strlen(optarg);
         // printf("opt %c %d\n", c, len);
@@ -104,21 +79,6 @@ void parse_opts(int argc, char **argv, Opt_data *opts) {
             case 'h':
                 printf(
                     "h -- display this help message\n\n"
-                    "Input/Output:\n"
-                    "i -- input method (std, txt, bin)\n"
-                    "    std -> standard input\n"
-                    "    txt -> text file\n"
-                    "    bin -> binary file\n"
-                    "    Usage: -i METHOD,FILENAME\n"
-                    "    Default: std\n"
-                    "    [Example: -i txt,input.txt]\n\n"
-                    "o -- output method (std, txt, bin)\n"
-                    "    std -> standard output\n"
-                    "    txt -> text file\n"
-                    "    bin -> binary file\n"
-                    "    Usage: -o METHOD,FILENAME\n"
-                    "    Default: std\n"
-                    "    [Example: -o txt,output.txt]\n\n"
                     "Sorting:\n"
                     "a -- algorithm (0, 1, 2, 3)\n"
                     "    0 -> no sort\n"
@@ -136,22 +96,19 @@ void parse_opts(int argc, char **argv, Opt_data *opts) {
                     "    d(own) and u(p)\n"
                     "    Usage: -d DIRECTION\n"
                     "    Default: u\n"
-                    "    [Example: -d u]\n"
+                    "    [Example: -d u]\n\n"
+                    "Generating:\n"
+                    "e -- number of elements (any number > 0 and < 2147483647)\n"
+                    "    Usage: -e NUMBER\n"
+                    "    Default: 1\n"
+                    "    [Example: -e 3]\n\n"
+                    "c -- number of array (any number > 0 and < 2147483647)\n"
+                    "    Usage: -c NUMBER\n"
+                    "    Default: 1\n"
+                    "    [Example: -c 3]\n\n"
                 );
 
                 return;
-
-            // input
-            case 'i':
-                opt_status = opt_i(optarg, opts, len);
-
-                break;
-
-            // output
-            case 'o':
-                opt_status = opt_o(optarg, opts, len);
-
-                break;
 
             // algorithm
             case 'a':
@@ -171,9 +128,19 @@ void parse_opts(int argc, char **argv, Opt_data *opts) {
 
                 break;
 
+            // number of elements
+            case 'e':
+                opt_status = opt_e(optarg, opts, len);
+
+                break;
+
+            // number of arrays
+            case 'c':
+                opt_status = opt_c(optarg, opts, len);
+
+                break;
+
             case '?':
-                // printf("!!\n");
-                // printf("opt ? -- %s\n", optarg);
                 if (strchr("ioafd", optopt) != NULL) {
                     fprintf(stderr, "[Error] Option %c requires an argument.\n", optopt);
                 } else if (isprint(optopt)) {
@@ -187,8 +154,6 @@ void parse_opts(int argc, char **argv, Opt_data *opts) {
 
         if (opt_status == Invalid_arg) {
             fprintf(stderr, "[Error] Invalid argument for -%c.\n", c);
-        } else if (opt_status == File_open_fault) {
-            fprintf(stderr, "[Error] Error when opening input file.\n");
         }
     }
 }

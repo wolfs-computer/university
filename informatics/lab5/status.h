@@ -11,6 +11,7 @@ typedef enum _Status {
     // opts parsing
     Invalid_arg,
     File_open_fault,
+    Eof,
 
     // data_io
     Invalid_input,

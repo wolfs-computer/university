@@ -36,7 +36,7 @@ void data_write_std(const Data *data, const int data_len) {
 // error --> print error --> continue with zero/spaces/default value
 
 
-static void get_2nd_field(FILE *stream, Data data) {
+static Status get_1st_field(FILE *stream, Data data) {
 
     char c = getc(stream);
     int i = 0;
@@ -45,23 +45,22 @@ static void get_2nd_field(FILE *stream, Data data) {
         c = getc(stream);
     }
 
-    if (i < ID_LEN - 1) {
-        fprintf(stderr, "[Error] Invalid input (not enough characters).\n");
-        for (int i = 0; i < ID_LEN - 1; i++) {
-            data.id[i] = ' ';
-        }
-    } else if (c != '\n' && c != EOF) {
-        fprintf(stderr, "[Error] Invalid input (not much characters).\n");
+    if (c == EOF) return Eof;
+
+    if (c == '\n' && i == ID_LEN - 1) {
+        data.id[ID_LEN - 1] = '\0';
+        return Success;
+    }
+
+    fprintf(stderr, "[Error] Invalid input.\n");
+    if (c != '\n') {
         while (getc(stream) != '\n');
     }
 
-    data.id[ID_LEN - 1] = '\0';
-
-
-    printf("!! |%s|\n", data.id);
+    return Invalid_input;
 }
 
-static void get_3rd_field(FILE *stream, Data data) {
+static void get_2nd_field(FILE *stream, Data data) {
 
     data.name = NULL;
 
@@ -77,84 +76,68 @@ static void get_3rd_field(FILE *stream, Data data) {
 }
 
 
-static void get_number(FILE *stream, int *num) {
+static Status get_number(FILE *stream, int *num) {
 
-    int status = scanf("%d", num);
+    int status = fscanf(stream, "%d", num);
 
     if (status == EOF) {
-        if (stream == stdin) {
-            printf("EOF\n");
-        }
+        return Eof;
     }
 
-    // while (getc(stream) != '\n');
+    if (status == 0) while (getc(stream) != '\n');
 
     if (status != 1 || *num < 1) {
         fprintf(stderr, "[Error] Invalid input.\n");
         *num = 1;
+        return Invalid_input;
     }
+
+    return Success;
+}
+
+static void end_input(Data **data, int *data_len) {
+    
 
 }
 
 
 void data_read_std(Data **data, int *data_len) {
+    *data = NULL;
+    *data_len = 0;
+    Status st = Failure;
 
     printf("Enter number of structs: ");
+    st = get_number(stdin, data_len);
+    if (st == Eof) {
+        printf("\n");
+        return;
+    }
+    printf("Number of structs -> %d\n", *data_len);
+    // *data_len = 1;
 
-    // if (scanf("%d", data_len) != 1 || *data_len < 1) {
-    //     fprintf(stderr, "[Error] Invalid input (number of structs default 1).\n");
-    //     *data_len = 1;
-    // }
-    //
-    // while (getc(stdin) != '\n');
-    get_number(stdin, data_len);
-    // printf("!!\n");
-
-    // scanf("%d", data_len);
-    // while (getchar() != '\n');
-    //
-    // while (*data_len != 1) {
-    //     fprintf(stderr, "[Error] Invalid input.\n");
-    //     scanf("%d", data_len);
-    // }
-    // // printf("%d\n", *data_len);
-
-
-    for (int i = 0; i < *data_len; i++) {
+    int i = 0;
+    for (; i < *data_len; i++) {
         printf("Struct %d\n", i + 1);
 
         *data = (Data*) realloc(*data, (i + 1) * sizeof(Data));
 
-        // always 8
         printf("id: ");
-        get_2nd_field(stdin, (*data)[i]);
-        // scanf("%8s", (*data)[i].id);
-        // printf("%s\n", (*data)[i].str);
+        st = get_1st_field(stdin, (*data)[i]);
+        if (st == Eof) break;
+        printf("!! |%s|\n", (*data)[i].id);
 
         printf("name: ");
-        get_3rd_field(stdin, (*data)[i]);
-        // (*data)[i].name = NULL;
-        // int l = 1;
-        // char c = getchar();
-        // while (c != '\n') {
-        //     (*data)[i].name = (char*) realloc((*data)[i].name, (l + 1) * sizeof(char));
-        //     (*data)[i].name[l - 1] = c;
-        //     c = getchar();
-        //     l++;
-        // }
-        // (*data)[i].name[l - 1] = '\0';
-        // printf("\n");
-        // printf("%s\n", (*data)[i].name);
+        get_2nd_field(stdin, (*data)[i]);
+        if (st == Eof) break;
+        printf("!! |%s|\n", (*data)[i].name);
 
         printf("quantity: ");
-        if (scanf("%d", &((*data)[i].quantity)) != 1) {
-            fprintf(stderr, "[Error] Invalid input.\n");
-            scanf("%d", &((*data)[i].quantity));
-        }
-
-        while (getc(stdin) != '\n');
-        // printf("%d\n", (*data)[i].quantity);
+        get_number(stdin, (int*) &((*data)[i].quantity));
+        if (st == Eof) break;
+        printf("!! %d\n", (*data)[i].quantity);
     }
+    printf("\n");
+    *data = (Data*) realloc(*data, (i - 1) * sizeof(Data));
 }
 
 
@@ -182,6 +165,7 @@ static int does_file_end(FILE *f) {
 
 
 
+// ok!
 void data_write_text(const char *filename, const Data *data, const int data_len) {
     FILE *f = fopen(filename, "w");
 
