@@ -1,0 +1,34 @@
+\newpage
+\section{Описание тестовых примеров}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|| c | c | c | p{0.2\linewidth} | p{0.2\linewidth} ||}
+    \hline
+    Значение \texttt{a} & Значение \texttt{n} & Значение \texttt{row\_count} & Ожидаемый вывод & Полученный вывод \\
+    \hline\hline
+    20 & 2 & 5 & 4.472140 \newline compare: 4.472136 & 4.472140 \newline compare: 4.472136 \\
+    \hline
+    9 & 2 & 4 & 3.000092 \newline compare: 3.000000 & 3.000092 \newline compare: 3.000000 \\
+    \hline
+    4 & 4 & 4 & 1.524275 \newline compare: 1.414214 & 1.524275 \newline compare: 1.414214 \\
+    \hline
+  \end{tabular}
+  \caption{Тестовые примеры для программы \texttt{root}}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|| c | c | c | p{0.25\linewidth} | p{0.25\linewidth} ||}
+    \hline
+    Значение \texttt{a} & Значение \texttt{n} & Значение \texttt{acc} & Ожидаемый вывод & Полученный вывод \\
+    \hline\hline
+    30 & 2 & 5 & Number of rows: 6 \newline Result: 5.47722 \newline compare: 5.47723 & Number of rows: 6 \newline Result: 5.47722 \newline compare: 5.47723 \\
+    \hline
+    9 & 2 & 4 & Number of rows: 5 \newline Result: 3.0000 \newline compare: 3.0000 & Number of rows: 5 \newline Result: 3.0000 \newline compare: 3.0000 \\
+    \hline
+    4 & 4 & 4 & Number of rows: 7 \newline Result: 1.4142 \newline compare: 1.4142 & Number of rows: 7 \newline Result: 1.4142 \newline compare: 1.4142 \\
+    \hline
+  \end{tabular}
+  \caption{Тестовые примеры для программы \texttt{root\_accuracy}}
+\end{table}

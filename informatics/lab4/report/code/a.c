@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <readline/readline.h>
 #include <time.h>
-
-#include "my_string.h"
-#include "my_readline.h"
 
 
 
@@ -28,23 +27,21 @@ void word_insert(char ***words, int **lens, int *word_count, char *word, int len
     (*words)[0] = word;
 }
 
-
 char *new_string(const char *input) {
-    int str_len = my_strlen(input);
+    int str_len = strlen(input);
     char *str = (char*) malloc((str_len + 1) * sizeof(char));
-    my_strcpy(str, input);
+    strcpy(str, input);
 
     int *word_lens = NULL;
     char **word_indexes = NULL;
     int word_count = 0;
 
-    char *word = my_strtok(str, " \t");
+    char *word = strtok(str, " \t");
     while (word != NULL) {
-
-        int word_len = my_strlen(word);
+        int word_len = strlen(word);
         word_insert(&word_indexes, &word_lens, &word_count, word, word_len);
 
-        word = my_strtok(NULL, " \t");
+        word = strtok(NULL, " \t");
     }
 
     int res_len = 1;
@@ -53,8 +50,8 @@ char *new_string(const char *input) {
     for (int i = 0; i < word_count; i++) {
         res_len += word_lens[i] + 1;
         res = (char*) realloc(res, res_len * sizeof(char));
-        my_strcat(res, word_indexes[i]);
-        my_strcat(res, " ");
+        strcat(res, word_indexes[i]);
+        strcat(res, " ");
     }
 
     if (res_len > 1) {
@@ -74,7 +71,7 @@ char *new_string(const char *input) {
 
 int main() {
 
-    char *input = my_readline("Input string: ");
+    char *input = readline("Input string: ");
 
     while (input != NULL) {
 
@@ -91,7 +88,7 @@ int main() {
         free(input);
         free(output);
 
-        input = my_readline("Input string: ");
+        input = readline("Input string: ");
     }
 
     return 0;
