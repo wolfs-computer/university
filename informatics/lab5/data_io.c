@@ -112,7 +112,7 @@ void data_read_std(Data **data, int *data_len) {
         printf("\n");
         return;
     }
-    printf("Number of structs -> %d\n", *data_len);
+    printf("Number of structs -> %d\n\n", *data_len);
     // *data_len = 1;
 
     int i = 0;
