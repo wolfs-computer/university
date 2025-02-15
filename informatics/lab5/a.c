@@ -151,6 +151,7 @@ int main(int argc, char **argv) {
     Data *data = NULL;
     int data_len = 0;
 
+    // printf("%d\n", opts.input);
     // input
     Status st = Success;
     if (opts.input == FLOW_STD) data_read_std(&data, &data_len);
@@ -176,8 +177,8 @@ int main(int argc, char **argv) {
     // output
     st = Success;
     if (opts.output == FLOW_STD) data_write_std(data, data_len);
-    else if (opts.output == FLOW_FILE_TXT) st = data_write_text(opts.input_filename, data, data_len);
-    else if (opts.output == FLOW_FILE_BIN) st = data_write_bin(opts.input_filename, data, data_len);
+    else if (opts.output == FLOW_FILE_TXT) st = data_write_text(opts.output_filename, data, data_len);
+    else if (opts.output == FLOW_FILE_BIN) st = data_write_bin(opts.output_filename, data, data_len);
     if (st != Success) data_write_std(data, data_len);
 
 

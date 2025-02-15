@@ -46,6 +46,7 @@ static Status opt_o(char *optarg, Opt_data *opts, int len) {
     if (!strncmp(optarg, "txt", 3)) opts->output = FLOW_FILE_TXT;
     else if (!strncmp(optarg, "bin", 3)) opts->output = FLOW_FILE_BIN;
     else return Invalid_arg;
+    // printf("%d %d\n", opts->output, FLOW_FILE_TXT);
 
     opts->output_filename = (char*) calloc(len - 4, sizeof(char));
     strcpy(opts->output_filename, optarg + 4);
