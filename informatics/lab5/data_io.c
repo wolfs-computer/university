@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "data_io.h"
 #include "status.h"
 
@@ -177,8 +178,12 @@ static int does_file_end(FILE *f) {
 
 
 // ok!
-void data_write_text(const char *filename, const Data *data, const int data_len) {
+Status data_write_text(const char *filename, const Data *data, const int data_len) {
     FILE *f = fopen(filename, "w");
+    if (feof(f) || ferror(f)) {
+        fclose(f);
+        return File_open_fault;
+    }
 
     fprintf(f, "%d\n", data_len);
     for (int i = 0; i < data_len; i++) {
@@ -188,6 +193,7 @@ void data_write_text(const char *filename, const Data *data, const int data_len)
     }
 
     fclose(f);
+    return Success;
 }
 
 
@@ -214,24 +220,21 @@ Status data_read_text(const char *filename, Data **data, int *data_len) {
     int i = 0;
     for (; i < *data_len; i++) {
         *data = (Data*) realloc(*data, (i + 1) * sizeof(Data));
-        // if (!data) return Memory_fault;
 
         // id
         st = get_id(f, *data + i);
         if (st != Success) break;
-        printf("!! |%s|\n", (*data)[i].id);
-
+        // printf("!! |%s|\n", (*data)[i].id);
 
         // name
         st = get_name(f, *data + i);
         if (st != Success) break;
-        printf("!! |%s|\n", (*data)[i].name);
-
+        // printf("!! |%s|\n", (*data)[i].name);
 
         // quantity
         get_number(f, (int*) &((*data)[i].quantity));
         if (st != Success) break;
-        printf("%d\n", (*data)[i].quantity);
+        // printf("%d\n", (*data)[i].quantity);
     }
     if (st != Success) {
         *data = (Data*) realloc(*data, (i - 1) * sizeof(Data));
@@ -252,6 +255,10 @@ Status data_read_text(const char *filename, Data **data, int *data_len) {
 
 Status data_write_bin(const char *filename, const Data *data, const int data_len) {
     FILE *f = fopen(filename, "w+b");
+    if (feof(f) || ferror(f)) {
+        fclose(f);
+        return File_open_fault;
+    }
 
     fwrite(&data_len, sizeof(data_len), 1, f);
     for (int i = 0; i < data_len; i++) {
@@ -296,7 +303,7 @@ Status data_read_bin(const char *filename, Data **data, int *data_len) {
         // always 8
         fread((*data)[i].id, sizeof(char), ID_LEN, f);
         if (feof(f) || ferror(f)) break;
-        printf("%s\n", (*data)[i].id);
+        // printf("%s\n", (*data)[i].id);
 
         // size of next object
         // int l = strlen(data[i].name) + 1;
@@ -325,22 +332,23 @@ Status data_read_bin(const char *filename, Data **data, int *data_len) {
 
 
 
-int main() {
-
-    Data *data = NULL;
-    int data_len = 0;
-
-    // data_read_std(&data, &data_len);
-    data_read_text("/home/Cyber_Wolf/Programs/5_university/informatics/lab5/tests/1_text", &data, &data_len);
-
-
-    for (int i = 0; i < data_len; i++) {
-        printf("%s\n", data[i].id);
-        printf("%s\n", data[i].name);
-        printf("%d\n", data[i].quantity);
-        free(data[i].name);
-    }
-    free(data);
-
-    return 0;
-}
+// int main() {
+//
+//     Data *data = NULL;
+//     int data_len = 0;
+//
+//     // data_read_std(&data, &data_len);
+//     // data_read_text("/home/Cyber_Wolf/Programs/5_university/informatics/lab5/tests/1_text", &data, &data_len);
+//     data_read_bin("/home/Cyber_Wolf/Programs/5_university/informatics/lab5/tests/1_bin", &data, &data_len);
+//
+//
+//     for (int i = 0; i < data_len; i++) {
+//         printf("%s\n", data[i].id);
+//         printf("%s\n", data[i].name);
+//         printf("%d\n", data[i].quantity);
+//         free(data[i].name);
+//     }
+//     free(data);
+//
+//     return 0;
+// }

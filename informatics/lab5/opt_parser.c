@@ -187,8 +187,9 @@ void parse_opts(int argc, char **argv, Opt_data *opts) {
 
         if (opt_status == Invalid_arg) {
             fprintf(stderr, "[Error] Invalid argument for -%c.\n", c);
-        } else if (opt_status == File_open_fault) {
-            fprintf(stderr, "[Error] Error when opening input file.\n");
         }
+        // } else if (opt_status == File_open_fault) {
+        //     fprintf(stderr, "[Error] Error when opening input file.\n");
+        // }
     }
 }

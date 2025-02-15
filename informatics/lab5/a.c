@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #include "status.h"
 #include "data_io.h"
 #include "opt_parser.h"
@@ -40,84 +41,84 @@ comparator
 */
 
 
-void DEBUG_opts(Opt_data opts) {
-    printf("input source -- %d\n", opts.input);
-    printf("input filename -- %s\n\n", opts.input_filename);
-
-    printf("output source -- %d\n", opts.output);
-    printf("output filename -- %s\n", opts.output_filename);
-
-    printf("algorithm -- %d\n", opts.algorithm);
-    printf("struct field -- %d\n", opts.field);
-    printf("sort direction -- %s\n", opts.direction == 0 ? "UP" : "DOWN");
-}
-
-
-
-void DEBUG_data() {
-
-    Data a = {
-        "7777777",
-        "random random!",
-        772
-    };
-
-    Data b = {
-        "0110101",
-        "S T R I N G",
-        1
-    };
-
-    Data l1[] = {a, b};
-    int l1_len = 2;
-
-    // data_write_text("./tests/2_text", l1, l1_len);
-    // data_write_bin("./tests/2_bin", l1, l1_len);
-
-
-    // Data *data = NULL;
-    // int data_len = 0;
-    //
-    // data_read_text("./tests/2_text", &data, &data_len);
-    //
-    // data_write_std(data, data_len);
-
-
-    Data *data = NULL;
-    int data_len = 0;
-
-    data_read_std(&data, &data_len);
-    data_write_std(data, data_len);
+// void DEBUG_opts(Opt_data opts) {
+//     printf("input source -- %d\n", opts.input);
+//     printf("input filename -- %s\n\n", opts.input_filename);
+//
+//     printf("output source -- %d\n", opts.output);
+//     printf("output filename -- %s\n", opts.output_filename);
+//
+//     printf("algorithm -- %d\n", opts.algorithm);
+//     printf("struct field -- %d\n", opts.field);
+//     printf("sort direction -- %s\n", opts.direction == 0 ? "UP" : "DOWN");
+// }
 
 
 
-    // write_data_text("1test", list, 2);
-    //
-    // int data_len = 0;
-    // Data *l = NULL;
-    // read_data_text("1test", &l, &data_len);
-    //
-    // for (int i = 0; i < data_len; i++) {
-    //     printf("%s\n", l[i].str);
-    //     printf("%s\n", l[i].name);
-    //     printf("%d\n", l[i].quantity);
-    //     free(l[i].name);
-    // }
-    // free(l);
-
-
-    // write_data_bin("2test", list, 2);
-    //
-    // int data_len = 0;
-    // Data *l = NULL;
-    // read_data_bin("2test", &l, &data_len);
-    //
-
-    for (int i = 0; i < data_len; i++) {
-        free(data[i].name);
-    }
-    free(data);
-}
+// void DEBUG_data() {
+//
+//     Data a = {
+//         "7777777",
+//         "random random!",
+//         772
+//     };
+//
+//     Data b = {
+//         "0110101",
+//         "S T R I N G",
+//         1
+//     };
+//
+//     Data l1[] = {a, b};
+//     int l1_len = 2;
+//
+//     // data_write_text("./tests/2_text", l1, l1_len);
+//     // data_write_bin("./tests/2_bin", l1, l1_len);
+//
+//
+//     // Data *data = NULL;
+//     // int data_len = 0;
+//     //
+//     // data_read_text("./tests/2_text", &data, &data_len);
+//     //
+//     // data_write_std(data, data_len);
+//
+//
+//     Data *data = NULL;
+//     int data_len = 0;
+//
+//     data_read_std(&data, &data_len);
+//     data_write_std(data, data_len);
+//
+//
+//
+//     // write_data_text("1test", list, 2);
+//     //
+//     // int data_len = 0;
+//     // Data *l = NULL;
+//     // read_data_text("1test", &l, &data_len);
+//     //
+//     // for (int i = 0; i < data_len; i++) {
+//     //     printf("%s\n", l[i].str);
+//     //     printf("%s\n", l[i].name);
+//     //     printf("%d\n", l[i].quantity);
+//     //     free(l[i].name);
+//     // }
+//     // free(l);
+//
+//
+//     // write_data_bin("2test", list, 2);
+//     //
+//     // int data_len = 0;
+//     // Data *l = NULL;
+//     // read_data_bin("2test", &l, &data_len);
+//     //
+//
+//     for (int i = 0; i < data_len; i++) {
+//         free(data[i].name);
+//     }
+//     free(data);
+// }
 
 
 
@@ -140,10 +141,10 @@ int main(int argc, char **argv) {
     parse_opts(argc, argv, &opts);
 
 
-    // DEBUG
-    DEBUG_opts(opts);
+    // // DEBUG
+    // DEBUG_opts(opts);
+    // // DEBUG_data();
 
-    // DEBUG_data();
 
 
 
@@ -151,9 +152,11 @@ int main(int argc, char **argv) {
     int data_len = 0;
 
     // input
+    Status st = Success;
     if (opts.input == FLOW_STD) data_read_std(&data, &data_len);
-    else if (opts.input == FLOW_FILE_TXT) data_read_text(opts.input_filename, &data, &data_len);
-    else if (opts.input == FLOW_FILE_BIN) data_read_bin(opts.input_filename, &data, &data_len);
+    else if (opts.input == FLOW_FILE_TXT) st = data_read_text(opts.input_filename, &data, &data_len);
+    else if (opts.input == FLOW_FILE_BIN) st = data_read_bin(opts.input_filename, &data, &data_len);
+    if (st != Success) data_read_std(&data, &data_len);
 
     // fields
     int (*comps[6])(const void*, const void*) = {
@@ -171,9 +174,11 @@ int main(int argc, char **argv) {
     else if (opts.algorithm == ALGO_HEAP) heap_sort(data, data_len, sizeof(Data), comps[opts.field * 2 + opts.direction]);
 
     // output
+    st = Success;
     if (opts.output == FLOW_STD) data_write_std(data, data_len);
-    else if (opts.output == FLOW_FILE_TXT) data_write_text(opts.input_filename, data, data_len);
-    else if (opts.output == FLOW_FILE_BIN) data_write_bin(opts.input_filename, data, data_len);
+    else if (opts.output == FLOW_FILE_TXT) st = data_write_text(opts.input_filename, data, data_len);
+    else if (opts.output == FLOW_FILE_BIN) st = data_write_bin(opts.input_filename, data, data_len);
+    if (st != Success) data_write_std(data, data_len);
 
 
 
