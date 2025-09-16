@@ -1,0 +1,75 @@
+
+
+colors
+    # general
+
+    # document colors
+
+    # status
+
+    # environments
+    # terms
+
+
+symbols
+    physics symbol wrapper
+    math symbol wrapper ?
+
+
+terms
+    # make them appear at the end of file in dictionary
+    # displayed with abbreviation(s), formula letter(s)
+
+    # term
+    definition
+    formula letter # for formula letters explanations
+
+    # glossary
+
+
+boxes for formulas/statements
+    # alignment problem
+
+    boxes for theorems/examples/...
+
+    explanations for formula's letters
+
+
+note environments
+    # examples
+    # theorems
+    #     prove of existence/uniqueness/...
+    # corollaries
+    lemmas
+    axioms
+
+
+color functions/quantifiers/... in equations for simplicity
+    # like f(), E(<no color here>), ... # maybe just use \color and \textcolor
+
+    # something like quantifiers can have default color,
+    # but when there is many of them, can be have different color
+
+
+document structure
+
+    default templates (font size, page size, blank borders, ...)
+
+    links/summary
+
+    show at the top of every page location (like math chap 1 > complex numbers)
+
+    general structure of future notes
+
+
+graphics
+
+    images/graphics (draw in obsidian and insert/copy it somewhere?)
+
+    block schemes (like trees)
+
+
+
+nvim
+    snippets
+

@@ -1,0 +1,108 @@
+\documentclass[12pt]{article}
+
+
+
+%#################################################=-> PREAMBLE <-=#################################################%
+
+
+
+%########################=-> Libs <-=#######################%
+
+\newcommand{\LibPath}{../wrapper} % this is main file
+
+\input{\LibPath/basic/colors.tex}
+\input{\LibPath/basic/symbols.tex}
+\input{\LibPath/basic/links.tex}
+
+\input{\LibPath/graphic_elements/terms.tex}
+% \input{\LibPath/graphic_elements/side_marks.tex}
+% \input{\LibPath/graphic_elements/underline.tex}
+% \input{\LibPath/graphic_elements/note_environments.tex}
+
+\input{\LibPath/document/document_settings.tex}
+\input{\LibPath/document/table_of_contents.tex}
+
+
+
+%########################=-> Document <-=#######################%
+
+\formatAfour
+
+
+
+%#################################################=-> ACTUAL DOCUMENT <-=#################################################%
+
+
+
+% \makeatletter
+%     \renewcommand*{\@@glossarysec}{section}%
+% \makeatother
+
+
+% empty glossary title
+\renewcommand{\glossarysection}[2][]{}
+
+\makeglossaries
+% \makenoidxglossaries
+
+
+
+
+% \newglossaryentry{computer}{
+%     name=computer,
+%     description={rocks},
+% }
+%
+% \newacronym{gcd}{GCD}{Greatest Common Divisor}
+
+
+
+
+\begin{document}
+
+
+\tableofcontents
+\newpage
+
+
+sdfkdsfjsd
+
+
+\hlTerm{Graphic Fc X??}{abr=GH,fletter=G,opacity=40,color=colorOrange}
+--- some cool lib that i found
+
+\hlTerm{a simple term}{abr=sdf} --- some cool lib that i found
+
+\hlTerm{a simple term 2}{} --- some cool lib that i found
+\hlTerm{sdf}{} --- some cool lib that i found
+
+
+\hlTerm{computer}{abr=PC} --- some cool rock
+
+% \colorbox{colorTermTerm}{sdf}
+
+% \newglossaryentry{computer2}{
+%     name=computer,
+%     description={rocks for this},
+% }
+
+
+% \gls{sdf}\\
+% \gls{a simple term}\\
+% \gls{gcd}
+
+
+
+\newpage
+
+
+\section{Glossary}
+% \printglossary[type=main,title={Special Terms}]
+% \printglossary[title={List of Abbreviations}]
+% \printglossary[numberedsection=autolabel,title={List of Abbreviations},toctitle={List of Abbreviations},style=indexgroup]
+\glsaddall
+\printglossary
+
+
+
+\end{document}

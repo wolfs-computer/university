@@ -1,0 +1,89 @@
+\documentclass[12pt]{article}
+
+
+
+% base path
+\newcommand{\BasePath}{/home/Cyber_Wolf/Coding/5_university/matan}
+
+% for custom package use
+\newcommand{\LibPath}{/home/Cyber_Wolf/Coding/1_projects/latex_libs/wrapper} % this is main file
+
+% content path
+\newcommand{\ContentPath}{\BasePath/src/2_content}
+
+% path to materials
+\newcommand{\MatPath}{\BasePath/materials}
+
+% path to figures
+\newcommand{\FigPath}{\MatPath/figures}
+
+
+
+\input{\BasePath/src/1_document/1_settings.tex}
+
+
+
+%#################################################=-> ACTUAL DOCUMENT <-=#################################################%
+
+
+
+\begin{document}
+
+
+
+\input{\BasePath/src/1_document/2_top_matter.tex}
+\input{\BasePath/src/1_document/3_abstract.tex}
+\input{\BasePath/src/1_document/4_table_of_contents.tex}
+\newpage
+
+% this should be after table of contents because it breaks otherwise
+% and plain style just weird
+\WpageStyle
+
+
+
+\Wsection{Intro}
+\WsubSection{sub intro}
+\WsubSubSection{sub sub intro}
+% \paragraph{test paragraph}
+
+
+% sdkf
+%
+%
+% \newpage
+% sdkf
+
+% \newpage
+
+
+\newpage
+
+\input{\BasePath/src/1_document/5_include_content.tex}
+
+\newpage
+
+gh got h
+
+\begin{figure}[ht]
+    \centering
+
+    \def\signFirst{\Huge gh?}
+    \def\signSecond{gh!}
+    \def\signRand{$gh!$}
+
+    \WincludeFig{fig1}
+    % \import{./figs/}{drawing.pdf_tex}
+    % \incfig{riemmans-theorem}
+
+    \caption{my fig!}
+    \label{fig:my_fig}
+
+\end{figure}
+
+
+
+
+
+
+\end{document}

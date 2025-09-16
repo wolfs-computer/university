@@ -1,0 +1,109 @@
+%#################################################=-> PACKAGE: WTable_of_contents <-=#################################################%
+
+
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{WTable_of_contents}[2025/05/13 WTable_of_contents]
+
+
+
+%########################=-> Packages <-=#######################%
+
+
+\usepackage{setspace}
+\usepackage[explicit]{titlesec}
+\usepackage{soul}
+
+\RequirePackage{\LibPath/basic/WLinks}
+\RequirePackage{\LibPath/basic/WColors}
+
+
+
+%#################################################=-> WTable_of_contents <-=#################################################%
+
+
+
+%########################=-> change table of contents heading <-=#######################%
+
+\renewcommand*\contentsname{\centering Summary \break}
+
+
+
+%########################=-> change table of contents singlespacing <-=#######################%
+
+% \newcommand{\Tableofcontents}{%
+%     \doublespacing%
+%     \tableofcontents%
+%     \singlespacing%
+% }
+
+
+
+%########################=-> change table of contents depth <-=#######################%
+
+
+
+\setcounter{tocdepth}{5} % include everything to subparagraphs
+
+
+
+%########################=-> change section and subsection formatting <-=#######################%
+
+
+
+\newbox\TitleUnderlineTestBox
+\newcommand*\TitleUnderline[2]
+    % #1 --
+    % #2 -- color of underline
+  {%
+    \bgroup
+    \setbox\TitleUnderlineTestBox\hbox{\colorbox{#2}\strut}%
+    \setul{\dimexpr\dp\TitleUnderlineTestBox-.3ex\relax}{.3ex}%
+    \ul{#1}%
+    \egroup
+  }
+
+\newcommand*\SectionNumberBox[2]
+    % #1 --
+    % #2 -- color of box
+    {%
+        \colorbox{#2}
+        {%
+            \makebox[2.5em][c]
+            {%
+                \color{colorDocumentBg} % to make like a hole in box
+                \strut
+                \csname the#1\endcsname
+            }%
+        }%
+        \TitleUnderline{\ \ \ }%
+    }
+
+
+% \titleformat{<command>}[<shape>]{<format>}{<label>}{<sep>}{<before-code>}[<after-code>]
+
+
+\titleformat{\section}
+  {\Large\bfseries\sffamily\color{colorDocumentSection}}
+  {\SectionNumberBox{section}{colorDocumentSection}}
+  % {}
+  {0pt}
+  {\TitleUnderline{#1}{colorDocumentSection}}
+
+\titleformat{\subsection}
+  {\large\bfseries\sffamily\color{colorDocumentSubSection}}
+  {\SectionNumberBox{subsection}{colorDocumentSubSection}}
+  {0pt}
+  {\TitleUnderline{#1}{colorDocumentSubSection}}
+
+\titleformat{\subsubsection}
+  {\large\bfseries\sffamily\color{colorDocumentSubSubSection}}
+  {\SectionNumberBox{subsubsection}{colorDocumentSubSubSection}}
+  {0pt}
+  {\TitleUnderline{#1}{colorDocumentSubSubSection}}
+
+\titleformat{\paragraph}
+  {\large\bfseries\sffamily\color{colorDocumentParagraph}\symbol}
+  {}
+  {0pt}
+  {\TitleUnderline{#1}{colorDocumentParagraph}}

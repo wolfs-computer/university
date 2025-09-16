@@ -1,0 +1,80 @@
+\documentclass[12pt]{article}
+
+
+
+%#################################################=-> PREAMBLE <-=#################################################%
+
+
+
+%########################=-> Libs <-=#######################%
+
+\newcommand{\LibPath}{..} % this is main file
+
+\input{\LibPath/colors.tex}
+\input{\LibPath/side_marks.tex}
+\input{\LibPath/underline.tex}
+\input{\LibPath/symbols.tex}
+
+
+
+%#################################################=-> ACTUAL DOCUMENT <-=#################################################%
+
+
+
+\begin{document}
+
+
+
+\begin{sidemark}[colorWarning][0cm][4pt]
+    {\huge \color{colorWarning} \symbolWarning}\\\\
+    More\\
+    text\\
+\end{sidemark}
+
+
+\begin{sidemark}[colorInfo][0cm][4pt]
+    {\huge \color{colorInfo} \symbolInfo}\\\\
+    More\\
+    text\\
+\end{sidemark}
+
+
+\begin{sidemark}[colorBullet][0cm][4pt]
+    {\huge \color{colorBullet} \symbolTarget}\\\\
+    More\\
+    text\\
+\end{sidemark}
+
+
+
+\begin{sidemark}[colorTodo][0cm][4pt]
+    {\huge \color{colorTodo} \symbolArrowDall}\\\\
+    More\\
+    text\\
+\end{sidemark}
+
+
+\begin{sidemark}[colorCorrect][0cm][4pt]
+    {\huge \color{colorCorrect} \symbolCorrect}\\\\
+    More\\
+    text\\
+\end{sidemark}
+
+
+\begin{sidemark}[colorWrong][0cm][4pt]
+    {\huge \color{colorWrong} \symbolWrong}\\\\
+    More\\
+    text\\
+\end{sidemark}
+
+
+\begin{sidemark}[colorMissing][0cm][4pt]
+    {\huge \color{colorMissing} \symbolMissing}\\\\
+    More\\
+    text\\
+\end{sidemark}
+
+
+
+
+\end{document}

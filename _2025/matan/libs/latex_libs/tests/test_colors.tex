@@ -1,0 +1,84 @@
+\documentclass[12pt]{article}
+
+
+
+%#################################################=-> PREAMBLE <-=#################################################%
+
+
+
+%########################=-> Libs <-=#######################%
+
+\newcommand{\LibPath}{..} % this is main file
+
+\input{\LibPath/colors.tex}
+\input{\LibPath/side_marks.tex}
+\input{\LibPath/symbols.tex}
+\input{\LibPath/underline.tex}
+
+
+
+%########################=-> Commands <-=#######################%
+
+\newcommand{\testC}[1]{
+    \begin{sidemark}[#1][0cm][4pt]
+        {\huge \color{#1}
+            \symbolTarget
+            \symbolWarning
+            \symbolInfo
+            \symbolWrong
+            \symbolCorrect
+
+            \symbolArrowDup
+            \symbolArrowDall
+            \symbolArrowUndo
+            \faArrowRight
+
+            \symbolCode
+            \symbolGithub
+            \symbolGoogle
+            \symbolTelegram
+            \symbolTelegramSecond
+            \symbolPinterest
+        }\\
+
+        More\\
+        text\\
+
+        \ucline{#1}{gh test}\\
+        \uclined{#1}{gh test}\\
+        \ucwave{#1}{gh test}\\
+        \ucdot{#1}{gh test}\\
+        \ucdash{#1}{gh test}\\
+        {\huge \ucdash{#1}{gh test}}\\
+    \end{sidemark}
+}
+
+
+%#################################################=-> ACTUAL DOCUMENT <-=#################################################%
+
+
+
+\begin{document}
+
+
+
+% \testC{colorPurple}
+% \testC{colorPurple2}
+
+% \testC{colorGreen}
+% \testC{colorGreen2}
+% \testC{colorGreen3}
+
+
+
+% \testC{colorMagenta}
+
+
+
+
+% \definecolor{colorTest}{HTML}{FFC777}
+% \testC{colorTest}
+
+
+
+\end{document}

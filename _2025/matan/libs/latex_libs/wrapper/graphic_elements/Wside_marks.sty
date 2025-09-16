@@ -1,0 +1,75 @@
+%#################################################=-> PACKAGE: Wside_marks <-=#################################################%
+
+
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{Wside_marks}[2025/05/13 Wside_marks]
+
+
+
+%########################=-> Packages <-=#######################%
+
+
+\usepackage{xparse}
+\usepackage[many]{tcolorbox}
+\usepackage{lipsum}
+
+\RequirePackage{\LibPath/basic/WColors}
+
+
+
+%#################################################=-> Wside_marks <-=#################################################%
+
+
+
+% TODO: make it like normal env
+% #1 -- color
+% #2 -- indentation width
+% #3 -- side mark width
+% #4 -- percent of white color to add for the background
+\DeclareTColorBox{sidemark}{O{colorWhite}O{0cm}O{4pt}O{10}O{0cm}}{
+    % frame empty,
+    % boxrule=0pt,
+    breakable,
+    outer arc=0pt,
+    arc=0pt,
+    colback=#1!#4!white, % background color
+    colframe=#1,
+    leftrule=#3,
+    rightrule=0pt,
+    toprule=0pt,
+    bottomrule=0pt,
+    top=0pt,
+    right=0pt,
+    bottom=0pt,
+    enlarge left by=#2,
+    width=\linewidth-#2-#5,
+}
+
+
+
+% TODO: make it like normal env
+\DeclareTColorBox{tbox}{O{colorBlack}O{0cm}O{4pt}O{10}}{
+    % frame empty,
+    boxrule=#3,
+    breakable,
+    outer arc=0pt,
+    arc=0pt,
+    colback=#1!#4!white, % background color
+    colframe=#1,
+    % leftrule=#3,
+    % rightrule=0pt,
+    % toprule=0pt,
+    % bottomrule=0pt,
+    % top=0pt,
+    % right=0pt,
+    % bottom=0pt,
+    % enlarge left by=#2,
+    width=\linewidth-#2,
+}
+
+
+
+
+
+\endinput

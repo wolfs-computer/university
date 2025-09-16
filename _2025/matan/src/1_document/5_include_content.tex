@@ -1,0 +1,35 @@
+
+
+% \QueryFiles{\BasePath/2_content/*/*.tex}{\input{#1}}
+
+% \QueryFiles{\BasePath/2_content/*}{
+%     \QueryFiles{\BasePath/2_content/*/*.tex}{\\input{#1}}
+% }
+
+% \newcommand*{\MaxNumOfChapters}{1}% Adjust these two settings for your needs.
+
+% \newcommand*{\SectionsToInclude}{
+%     \BasePath/2_content/0_test,
+% }%
+%
+%
+% \foreach \c in {\SectionsToInclude}{%
+%     % \foreach \s in {1,2,...,\MaxNumOfSections}{%
+%     %     \IfFileExists{Chapter\c/Section\s} {%
+%     %         \input{Chapter\c/Section\s}%
+%     %     }{%
+%     %             % files does not exist, so nothing to do
+%     %     }%
+%     % }%
+%     \QueryFiles{\c/*.tex}{\input{#1}}%
+% }%
+
+% \QueryFiles{\BasePath/2_content/0_test/*.tex}{\input{#1}}%
+
+
+% \immediate\write18{ls \BasePath/2_content/0_test/ > tmp}
+% \input{tmp.dat}
+
+
+
+\input{\ContentPath/0_test/1_intro.tex}

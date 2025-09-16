@@ -1,0 +1,92 @@
+%#################################################=-> PACKAGE: Wterms <-=#################################################%
+% Build dir sometimes should be entirely deleted
+
+% All terms should be special, if have same name just use numbers
+% Glossary automatically sort all terms alphabetically
+
+
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{Wterms}[2025/05/13 Wterms]
+
+
+
+%########################=-> Packages <-=#######################%
+
+
+\usepackage{xkeyval}
+% \usepackage[xindy]{glossaries}
+% \usepackage[acronym,toc,shortcuts]{glossaries}
+\usepackage[nopostdot,nonumberlist,style=long4col]{glossaries}
+
+% \usepackage[nonumberlist,toc,nopostdot,section=section]{glossaries}
+% \usepackage[section=section]{glossaries}
+
+
+\RequirePackage{\LibPath/basic/WColors}
+\RequirePackage{\LibPath/basic/WSymbols}
+\RequirePackage{\LibPath/basic/WLinks}
+
+
+
+%#################################################=-> Wterms <-=#################################################%
+
+
+
+\makeatletter
+    % define keys
+
+    % same for all environments
+
+
+    % default values occur only when name mentioned, but no "=value"
+    % variable prefix: "hl"
+    \define@key[NoteEnv]{hl}{abr}[]{\def\hlAbr{#1}}
+    \define@key[NoteEnv]{hl}{fletter}[]{\def\hlFletter{#1}}
+    \define@key[NoteEnv]{hl}{color}[colorTermTerm]{\def\hlColor{#1}}
+    \define@key[NoteEnv]{hl}{opacity}[50]{\def\hlWhitePercent{#1}}
+
+
+    % preset keys (when not mentioned)
+
+    % no new lines between them! This will cause errors!
+    \presetkeys[NoteEnv]{hl}{
+        abr=,
+        fletter=,
+        color=colorTermTerm,
+        opacity=50,
+    }{}
+
+\makeatother
+
+
+
+\newcommand{\hlTerm}[2]{
+
+    \setkeys[NoteEnv]{hl}{#2}
+
+
+    % create glossary entry
+    \newglossaryentry{#1}{
+        name=#1,
+        description={\hyperlink{#1}{\symbolArrowDall}},
+    }
+
+
+    \hypertarget{#1}{\textbf{\colorbox{\hlColor!\hlWhitePercent!white}{#1}}}%
+    \ifthenelse{\equal{\hlAbr}{}}{ % if no abreviation
+        % do nothing
+    }{
+        ({\color{\hlColor}\textbf{\hlAbr}})%
+    }%
+    \ifthenelse{\equal{\hlFletter}{}}{ % if no formula letter
+        % do nothing
+    }{
+        <\textbf{\hlFletter}>%
+    }%
+}
+
+
+
+
+\endinput

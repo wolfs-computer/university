@@ -1,0 +1,119 @@
+%#################################################=-> PACKAGE: Wpage_style <-=#################################################%
+
+
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{Wpage_style}[2025/05/14 Wpage_style]
+
+
+
+%########################=-> Packages <-=#######################%
+
+
+\usepackage{fancyhdr}
+\usepackage{xifthen}% provides \isempty test
+
+\RequirePackage{\LibPath/basic/WColors}
+
+
+
+%#################################################=-> Wpage_style <-=#################################################%
+
+
+
+% \fancyhead[R]{Studiehandledning}
+% \fancyfoot[R]{\thepage}
+
+
+% \renewcommand{\chaptermark}[1]{%
+%   \markboth{\textbf{\chaptername}\ \thechapter.\ \textbf{#1}}{}%
+% }
+
+% \renewcommand{\headrulewidth}{0pt} % no line in header area
+
+% \fancyhead[RO, LE]{title}
+
+
+
+% https://latex.org/forum/viewtopic.php?t=6581
+\newcommand{\WsectionTitle}{}
+\newcommand{\Wsection}[1]{\section{#1}\renewcommand{\WsectionTitle}{#1}}
+
+\newcommand{\WsubSectionTitle}{}
+\newcommand{\WsubSection}[1]{\subsection{#1}\renewcommand{\WsubSectionTitle}{#1}}
+
+\newcommand{\WsubSubSectionTitle}{}
+\newcommand{\WsubSubSection}[1]{\subsubsection{#1}\renewcommand{\WsubSubSectionTitle}{#1}}
+
+% \Wsection to create sections/subsections/...
+% this will allow to manipulate headings properly
+
+% create command that returns text with formatted header
+% and simply put it in fancyhead{}
+
+\newcommand{\PageHeading}{
+
+    % Section
+    \ifthenelse{\isempty{\WsectionTitle}}{% if empty
+        % do nothing
+    }{
+        {\color{colorDocumentSection!80!colorWhite}\textbf{\thesection} \textbf{\WsectionTitle}}%
+    }%
+%
+    % SubSection
+    \ifthenelse{\isempty{\WsubSectionTitle}}{% if empty
+        % do nothing
+    }{
+        \textbf{>} {\color{colorDocumentSubSection!80!colorWhite}\textbf{\csname thesubsection\endcsname} \textbf{\WsubSectionTitle}}%
+    }%
+%
+    % SubSubSection
+    \ifthenelse{\isempty{\WsubSubSectionTitle}}{% if empty
+        % do nothing
+    }{
+        \textbf{>} {\color{colorDocumentSubSubSection!80!colorWhite}\textbf{\csname thesubsubsection\endcsname} \textbf{\WsubSubSectionTitle}}%
+    }%
+}
+
+
+% % \fancyhead{}
+% % on the left
+% % \fancyhead[LO, RE]{\PageHeading}
+% \fancyhead[LO, RE]{\PageHeading}
+% % \fancyhead[RO,R]{\rightmark}
+%
+% % \fancyfoot{}
+% % on the right
+% \fancyfoot[LE, RO]{\thepage}
+% % \fancyfoot[CO,RE]{name}
+%
+% % \setlength{\headwidth}{\linewidth}
+% % \setlength{\headheight}{17pt}
+% % \addtolength{\headwidth}{\marginparwidth}
+
+
+
+\newcommand{\WpageStyle}{
+    \pagestyle{fancy}
+    % \fancypagestyle{main}{
+    %     \fancyhf{} % clear existing header/footer entries
+    %     \fancyhead[L]{\PageHeading}
+    %     \fancyfoot[R]{\thepage}
+    % }
+
+    \fancyhf{} % clear existing header/footer entries
+    \fancyhead[L]{\PageHeading}
+    \fancyfoot[R]{\thepage}
+    \pagestyle{fancy}
+}
+
+
+
+
+% \fancypagestyle{plain}{%
+%    % \fancyhead[LE,LO]{\includegraphics[width=3cm, height=\dimexpr \headheight-\dp\strutbox]{example-image}}
+%    % \fancyhead[RE,RO]{%
+%        % \parbox[b]{\dimexpr \textwidth-3cm-\columnsep}%
+%        % {\small\uppercase\leftmark}}%
+% }%
+%

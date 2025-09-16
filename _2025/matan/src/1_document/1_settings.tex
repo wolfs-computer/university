@@ -1,0 +1,70 @@
+
+
+
+\usepackage{\LibPath/document/WDocument_settings}
+\usepackage{\LibPath/document/Wpage_style}
+\usepackage{\LibPath/document/WTable_of_contents}
+
+\usepackage{\LibPath/basic/WColors}
+
+\usepackage{\LibPath/graphic_elements/Wside_marks}
+\usepackage{\LibPath/graphic_elements/Wunderline}
+\usepackage{\LibPath/graphic_elements/Wnote_env}
+\usepackage{\LibPath/graphic_elements/Wterms}
+\usepackage{\LibPath/graphic_elements/WfigImp}
+\usepackage{\LibPath/graphic_elements/Wbox}
+
+
+
+\usepackage[fontsize=15pt]{fontsize}
+
+
+
+% \formatAfour
+
+
+% from WDocument_settings, but because of headings and footings
+% of the page that keep getting out of the page
+% i chagned top and bottom values
+\usepackage[top=40pt,bottom=40pt,left=40pt,right=40pt]{geometry}
+
+
+
+% \WpageStyle
+
+
+% for 5_include_content.tex
+% \usepackage{pgffor}
+% \usepackage{l3sys-query}
+
+
+
+
+% russian language support
+% https://ru.overleaf.com/learn/latex/Russian
+
+% \usepackage[russian]{babel}
+% \usepackage[utf8]{inputenc}
+% \usepackage[T2A]{fontenc}
+
+\usepackage{iftex}
+\iftutex
+    % For LuaTeX or XeTeX Use Google's 
+    % OpenType Noto fonts for typesetting
+    % Russian text
+    \usepackage{fontspec}
+    \defaultfontfeatures{Ligatures={TeX}}
+    \setmainfont{Noto Serif}
+    \setsansfont{Noto Sans}
+    \setmonofont{Noto Sans Mono}
+\else
+    % For pdfTeX we must use old
+    % 8-bit font technologies
+    \usepackage[T2A]{fontenc}
+\fi
+
+%Hyphenation rules
+\usepackage{hyphenat}
+\hyphenation{ма-те-ма-ти-ка вос-ста-нав-ли-вать}
+
+\usepackage[english, russian]{babel}

@@ -1,0 +1,104 @@
+\documentclass[12pt]{article}
+
+
+
+%#################################################=-> PREAMBLE <-=#################################################%
+
+
+
+%########################=-> Libs <-=#######################%
+
+\newcommand{\LibPath}{..} % this is main file
+
+\input{\LibPath/colors.tex}
+\input{\LibPath/side_marks.tex}
+\input{\LibPath/underline.tex}
+\input{\LibPath/symbols.tex}
+
+
+
+%#################################################=-> ACTUAL DOCUMENT <-=#################################################%
+
+
+
+\begin{document}
+
+
+
+% test warning
+\begin{sidemark}[colorWarning]
+    {\huge \color{colorWarning} \symbolWarning}\\\\
+    This example shows some instances of using the \texttt{xcolor} package 
+    to change the color of elements in \LaTeX.
+\end{sidemark}
+
+
+% test info colors
+\begin{sidemark}[colorInfo][2cm][9pt]
+    {\huge \color{colorInfo} \symbolInfo}\\\\
+    This example shows some instances of using the \texttt{xcolor} package 
+    to change the color of elements in \LaTeX.
+\end{sidemark}
+
+\begin{sidemark}[colorInfo2][2cm][9pt]
+    {\huge \color{colorInfo2} \symbolInfo}\\\\
+    This example shows some instances of using the \texttt{xcolor} package 
+    to change the color of elements in \LaTeX.
+\end{sidemark}
+
+
+% test todo color
+\begin{sidemark}[colorTodo][2cm][9pt]
+    {\huge \color{colorTodo} \symbolInfo}\\\\
+    {\huge \color{colorTodo} \faArrows*}\\\\
+    This example shows some instances of using the \texttt{xcolor} package 
+    to change the color of elements in \LaTeX.
+\end{sidemark}
+
+
+\begin{sidemark}[colorInfo][][9pt]
+    This example shows some instances of using the \texttt{xcolor} package 
+    to change the color of elements in \LaTeX.
+\end{sidemark}
+
+
+
+\begin{sidemark}[colorInfo][2cm][0pt]
+        \begin{sidemark}[colorInfo][-0.5cm][0pt]
+        This example shows some instances of using the \texttt{xcolor} package 
+        to change the color of elements in \LaTeX.
+        This example shows some instances of using the \texttt{xcolor} package 
+        to change the color of elements in \LaTeX.
+        \end{sidemark}
+    This example shows some instances of using the \texttt{xcolor} package 
+    to change the color of elements in \LaTeX.
+    This example shows some instances of using the \texttt{xcolor} package 
+    to change the color of elements in \LaTeX.
+\end{sidemark}
+
+
+
+% test ujnderline
+\ucline{colorTodo}{gh test}\\
+\uclined{colorTodo}{gh test}\\
+\ucwave{colorTodo}{gh test}\\
+\ucdot{colorTodo}{gh test}\\
+{\huge \ucdash{colorTodo}{gh test}}\\
+\ucdash{colorTodo}{gh test}\\
+
+\uTheorem{My theorem:}\\
+
+
+
+\begin{itemize}
+    \item First item
+    \item Second item
+\end{itemize}
+
+
+
+
+
+
+
+\end{document}

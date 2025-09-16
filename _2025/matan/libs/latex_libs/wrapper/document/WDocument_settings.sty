@@ -1,0 +1,41 @@
+%#################################################=-> PACKAGE: WDocument_settings <-=#################################################%
+
+
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{WDocument_settings}[2025/05/13 WDocument_settings]
+
+
+
+%########################=-> Packages <-=#######################%
+
+
+\usepackage{pagecolor}
+
+\RequirePackage{\LibPath/basic/WColors}
+\RequirePackage{\LibPath/basic/WLinks}
+
+
+
+%#################################################=-> WDocument_settings <-=#################################################%
+
+
+
+\newcommand{\formatAfour}{
+    \usepackage{a4wide}
+    \usepackage[top=30pt,bottom=30pt,left=48pt,right=46pt]{geometry}
+}
+
+
+
+% problem with note envs
+% https://tex.stackexchange.com/questions/320605/how-to-print-in-white-text-over-black-background
+\newcommand{\DocumentDark}{
+    \pagecolor{colorBlack}
+    \color{colorWhite}
+}
+
+
+
+% change font size
+% https://tex.stackexchange.com/questions/43719/how-do-i-change-the-default-font-size

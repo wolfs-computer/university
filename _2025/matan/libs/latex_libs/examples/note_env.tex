@@ -1,0 +1,284 @@
+\documentclass[12pt]{article}
+
+
+
+%#################################################=-> PREAMBLE <-=#################################################%
+
+
+
+%########################=-> Libs <-=#######################%
+
+
+\newcommand{\LibPath}{/home/Cyber_Wolf/Coding/1_projects/latex_libs/wrapper} % this is main file
+
+
+\usepackage{\LibPath/basic/WColors}
+\usepackage{\LibPath/basic/WSymbols}
+% \usepackage{\LibPath/basic/WLinks}
+
+\usepackage{\LibPath/graphic_elements/Wside_marks}
+\usepackage{\LibPath/graphic_elements/Wunderline}
+\usepackage{\LibPath/graphic_elements/Wnote_env}
+
+\usepackage{\LibPath/document/WDocument_settings}
+\usepackage{\LibPath/document/WTable_of_contents}
+
+
+
+%########################=-> Document <-=#######################%
+
+\formatAfour
+
+
+
+%#################################################=-> ACTUAL DOCUMENT <-=#################################################%
+
+
+
+\begin{document}
+
+
+\tableofcontents
+\newpage
+
+
+
+
+%########################=-> Example <-=#######################%
+\section{Example env:}
+
+
+
+\begin{Example}{}
+    \ExampleHeading{text=Of simple env}
+
+    You need to solve $$ x^2 = 3 $$
+
+
+    \begin{ExampleTask}{}
+
+        you just ...\\
+        $$ x = +-\sqrt{3} $$
+
+    \end{ExampleTask}
+
+
+    \begin{ExampleAnswer}{Rindent=13cm,}
+        +-\sqrt{3}
+
+    \end{ExampleAnswer}
+\end{Example}
+
+
+
+\begin{Example}{}
+    \ExampleHeading{text=Of something}
+
+
+    \begin{ExampleTask}{optionNumber=1,optionText=By doing someting,}
+        gh\\
+        gh
+    \end{ExampleTask}
+
+
+    \begin{ExampleTask}{optionNumber=2,optionText=By doing this,}
+        GH\\
+        GH
+    \end{ExampleTask}
+
+
+    \begin{ExampleAnswer}{Rindent=9cm,}
+        Answer is 42
+    \end{ExampleAnswer}
+\end{Example}
+
+
+
+\begin{Example}{colorBgPercent=10,thickness=10pt,}
+    \ExampleHeading{colorTitle=colorGreen,text=gh for h,colorText=colorRed,}
+
+
+    gh for h\\df
+
+    \begin{ExampleTask}{skip=12pt,}
+        gh for test\\
+        one more string
+    \end{ExampleTask}
+
+    \begin{ExampleTask}{
+        optionNumber=1,
+        optionText=caption,
+        optionColorText=colorRed,
+    }
+        gh\\
+        for
+    \end{ExampleTask}
+
+    \begin{ExampleTask}{
+        optionNumber=2,
+        optionText=caption,
+        optionColorText=colorGreen,
+    }
+        gh\\
+        for
+    \end{ExampleTask}
+
+
+    \begin{ExampleAnswer}{}
+        is 412
+    \end{ExampleAnswer}
+
+\end{Example}
+
+
+
+%########################=-> Theorem <-=#######################%
+\newpage
+\section{Theorem env:}
+
+
+
+\begin{Theorem}{}
+    \TheoremHeading{text=Of someting,}
+
+
+    This is true:
+
+
+    \begin{tcbraster}[raster columns=3,raster halign=right]
+        \centering
+        \begin{tbox}[colorTheorem][0cm][2pt][10]
+            {\large $$ x * 2 = 6 $$}
+        \end{tbox}
+    \end{tcbraster}
+
+
+    and this is cool
+
+
+    \begin{TheoremProof}{}
+        just\\
+        because\\
+        i said so.
+    \end{TheoremProof}
+
+\end{Theorem}
+
+
+
+\begin{Theorem}{}
+    \TheoremHeading{text=About someting,}
+
+    this theorm about nothin gand everything:\\
+
+    \medskip
+    \begin{tcbraster}[raster columns=2,raster halign=right]
+        \begin{tbox}[colorTheorem][0cm][2pt][10]
+            \centering
+            a > b ==> a bigger then b\\
+            a > b ==> a bigger then b\\
+            a > b ==> a bigger then b
+        \end{tbox}
+        \begin{tbox}[colorTheorem][0cm][2pt][10]
+            \centering
+            a > b ==> a bigger then b\\
+            a > b ==> a bigger then b\\
+            a > b ==> a bigger then b
+        \end{tbox}
+        \begin{tbox}[colorTheorem][0cm][2pt][10]
+            \centering
+            a > b ==> a bigger then b\\
+            a > b ==> a bigger then b\\
+            a > b ==> a bigger then b
+        \end{tbox}
+    \end{tcbraster}
+
+    \begin{tbox}[colorTheorem][0cm][2pt][10]
+        \centering
+        a > b ==> a bigger then b\\
+        a > b ==> a bigger then b\\
+        a > b ==> a bigger then b
+    \end{tbox}
+
+    \begin{tbox}[colorTheorem][0cm][2pt][10]
+        \centering
+        \textbf{%
+            a > b ==> a bigger then b\\
+            a > b ==> a bigger then b\\
+            a > b ==> a bigger then b
+        }
+    \end{tbox}
+    \medskip
+
+
+    that were cool boxes
+
+
+    \begin{TheoremProof}{}
+        Some theorem text\\
+        one more line
+    \end{TheoremProof}
+    
+\end{Theorem}
+
+
+
+%########################=-> Corollaries <-=#######################%
+\newpage
+\section{Corollaries env:}
+
+
+
+\begin{Corollaries}{}
+    \CorollariesHeading{text=Of someting}
+
+
+    gh
+
+
+    \begin{CorollariesItem}{number=1,text=if you do <this> you get <this>}
+        test
+    \end{CorollariesItem}
+
+
+    \begin{CorollariesItem}{number=2,text=if you do <this> you get <this>}
+        test 2
+    \end{CorollariesItem}
+
+
+\end{Corollaries}
+
+
+
+\begin{Corollaries}{}
+    \CorollariesHeading{text=Of someting}
+
+
+    \begin{CorollariesItem}{}
+        First\\
+        someting
+    \end{CorollariesItem}
+
+
+    \begin{CorollariesItem}{}
+        Second\\
+        someting
+    \end{CorollariesItem}
+
+
+    \begin{CorollariesItem}{number=3,text=if you do <this> you get <this>}
+        Some random text
+
+        \begin{tcbraster}[raster columns=3,raster halign=right]
+            \centering
+            \begin{tbox}[colorCorollaries][0cm][2pt][10]
+                {\large $$ x * 2 = 6 $$}
+            \end{tbox}
+        \end{tcbraster}
+    \end{CorollariesItem}
+
+\end{Corollaries}
+
+
+
+\end{document}

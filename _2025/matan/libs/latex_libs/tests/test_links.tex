@@ -1,0 +1,98 @@
+\documentclass[12pt]{article}
+
+
+
+%#################################################=-> PREAMBLE <-=#################################################%
+
+
+
+%########################=-> Libs <-=#######################%
+
+\newcommand{\LibPath}{../wrapper} % this is main file
+
+
+\input{\LibPath/basic/colors.tex}
+% \input{\LibPath/basic/symbols.tex}
+\input{\LibPath/basic/links.tex}
+
+\input{\LibPath/graphic_elements/highlight.tex}
+% \input{\LibPath/graphic_elements/side_marks.tex}
+% \input{\LibPath/graphic_elements/underline.tex}
+% \input{\LibPath/graphic_elements/note_environments.tex}
+
+\input{\LibPath/document/document_settings.tex}
+\input{\LibPath/document/table_of_contents.tex}
+
+
+
+%########################=-> Document <-=#######################%
+
+\formatAfour
+
+
+
+%#################################################=-> ACTUAL DOCUMENT <-=#################################################%
+
+
+
+\begin{document}
+
+
+
+% \Tableofcontents
+\tableofcontents
+
+
+\newpage
+
+
+
+\section{My first section}
+\subsection{My first sub}
+\subsubsection{My first subsub}
+\paragraph{My first paragraph}
+\subparagraph{My first subparagraph}
+
+\section{My second section}
+
+
+
+\chapter*{chapter 2}
+\chapter{chapter 3}
+
+
+
+
+
+
+gh\\\\
+
+\href{https://youtube.com}{Youtube home page}\\
+\url{https://youtube.com}\\\\
+
+\href{run:/home/Cyber_Wolf/Programs/latex/_libs/links.tex}{my file}\\
+
+
+
+\hyperlink{target1}{my first target link}\\
+
+% \addtocontents{toc}{\hyperlink{target1}{my first target link}}
+
+
+
+
+
+\newpage
+df
+\newpage
+
+
+\hypertarget{target1}{this is 1st target}\\
+
+\phantomsection
+\addcontentsline{toc}{paragraph}{test link}
+
+
+
+
+\end{document}

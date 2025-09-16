@@ -1,0 +1,274 @@
+%#################################################=-> PACKAGE: WColors <-=#################################################%
+
+
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{WColors}[2025/05/13 WColors]
+
+
+
+%########################=-> Packages <-=#######################%
+
+\RequirePackage{xcolor}
+
+
+
+%#################################################=-> WColors <-=#################################################%
+
+
+
+%########################=-> Status colors <-=#######################%
+% to color a warning sign for example
+
+\definecolor{colorWarning}{HTML}{ECA009} % #ECA009
+\definecolor{colorWarning2}{HTML}{986800} % #FFE621
+% \definecolor{Warning_color3}{HTML}{E8C70C} % #E8C70C
+
+\definecolor{colorInfo}{HTML}{3EB4BF} % #3EB4BF
+\definecolor{colorInfo2}{HTML}{0084BC} % #0084BC
+% \definecolor{Info_color3}{HTML}{53DFDD} % #
+
+\definecolor{colorTodo}{HTML}{FF5C00} % #FF5C00
+% \definecolor{colorTodo2}{HTML}{FBA922} % #FBA922
+
+\definecolor{colorBullet}{HTML}{FF5C00} % #FF5C00
+
+\definecolor{colorCorrect}{HTML}{10B981} % #10B981
+\definecolor{colorCorrect2}{HTML}{44CF6E} % #44CF6E
+\definecolor{colorCorrect3}{HTML}{c6ff00} % #c6ff00
+
+\definecolor{colorWrong}{HTML}{FF5250} % #FF5250
+\definecolor{colorWrong2}{HTML}{e60053} % #e60053 % only works in white theme
+
+\definecolor{colorMissing}{HTML}{7C3AED} % #7C3AED
+\definecolor{colorMissing2}{HTML}{876BE0} % #876BE0
+\definecolor{colorMissing3}{HTML}{FF00FF} % #FF00FF
+
+
+
+% \definecolor{Note_color}{HTML}{} % #
+% \definecolor{Remember_color}{HTML}{} % #
+
+
+
+%########################=-> Notes colors <-=#######################%
+% to highlight something in text
+
+
+
+\definecolor{colorTheorem}{HTML}{7C3AED} % #7C3AED
+\definecolor{colorExample}{HTML}{ff5c00} % #ff5c00
+\definecolor{colorCorollaries}{HTML}{00BCD4} % #00BCD4
+
+
+
+%####=-> terms <-=####%
+
+
+\definecolor{colorTermTerm}{HTML}{10B981} % #10B981
+\definecolor{colorTermWarning}{HTML}{ECA009} % #ECA009
+\definecolor{colorTermAlert}{HTML}{FF5250} % #FF5250
+
+
+
+%####=-> examples/practice <-=####%
+
+% example
+% answer
+
+
+
+%########################=-> Document colors <-=#######################%
+% to color links, sections, ...
+
+
+
+\definecolor{colorDocumentBg}{HTML}{FFFFFF} % #FFFFFF
+\definecolor{colorDocumentFg}{HTML}{000000} % #000000
+
+
+
+%####=-> document parts <-=####%
+
+\definecolor{colorDocumentSection}{HTML}{3EB4BF} % #3EB4BF
+\definecolor{colorDocumentSubSection}{HTML}{5E81AC} % #5E81AC
+\definecolor{colorDocumentSubSubSection}{HTML}{5E81AC} % #5E81AC
+\definecolor{colorDocumentParagraph}{HTML}{3EB4BF} % #3EB4BF
+\definecolor{colorDocumentSubParagraph}{HTML}{3EB4BF} % #3EB4BF
+\definecolor{colorDocumentChapter}{HTML}{3EB4BF} % #3EB4BF
+
+
+
+%####=-> links <-=####%
+
+\definecolor{colorLinkDocument}{HTML}{10B981} % #10B981
+\definecolor{colorLinkFile}{HTML}{FF5250} % #FF5250
+\definecolor{colorLinkUrl}{HTML}{3EB4BF} % #3EB4BF
+
+
+
+%########################=-> Colors <-=#######################%
+% to be able to change them to some different shade, etc.
+%
+% F -- flip
+% D -- dark
+% DD -- dark mode only
+% L -- light
+% LL -- light mode only
+% S -- swamp color
+
+
+
+\definecolor{colorWhite}{HTML}{FFFFFF} % #FFFFFF
+\definecolor{colorBlack}{HTML}{000000} % #000000
+
+
+%####=-> grey <-=####%
+
+\definecolor{colorGrey}{HTML}{5E81AC} % #5E81AC
+\definecolor{colorGrey2}{HTML}{768399} % #768399
+
+\definecolor{colorLGrey}{HTML}{81A1C1} % #81A1C1
+\definecolor{colorLGrey2}{HTML}{81A2BE} % #81A2BE
+
+
+
+%####=-> red <-=####%
+
+\definecolor{colorRed}{HTML}{FF5250} % #FF5250
+\definecolor{colorRed2}{HTML}{e34039} % #e34039
+
+% LL
+\definecolor{colorLLRed}{HTML}{e60053} % #e60053
+\definecolor{colorLLRed}{HTML}{DC2626} % #DC2626
+
+
+
+%####=-> orange <-=####%
+
+\definecolor{colorOrange}{HTML}{ff5c00} % #ff5c00
+\definecolor{colorOrange2}{HTML}{D96C00} % #D96C00
+
+% D
+\definecolor{colorDOrange}{HTML}{D96C00} % #D96C00
+\definecolor{colorDOrange2}{HTML}{ffb52a} % #ffb52a
+\definecolor{colorDOrange3}{HTML}{fba922} % #fba922
+\definecolor{colorDOrange4}{HTML}{FFA500} % #FFA500
+\definecolor{colorDOrange5}{HTML}{ECA009} % #ECA009
+
+% DD
+\definecolor{colorDDOrange}{HTML}{be5103} % #be5103
+
+% LL
+\definecolor{colorLLOrange}{HTML}{E87D3E} % #E87D3E
+\definecolor{colorLLOrange2}{HTML}{E9973F} % #E9973F
+\definecolor{colorLLOrange3}{HTML}{FBBF24} % #FBBF24
+\definecolor{colorLLOrange4}{HTML}{FBBF24} % #FBBF24
+\definecolor{colorLLOrange5}{HTML}{fba922} % #fba922
+\definecolor{colorLLOrange6}{HTML}{F0C674} % #F0C674
+
+
+
+%####=-> green <-=####%
+
+\definecolor{colorGreen}{HTML}{10B981} % #10B981
+\definecolor{colorGreen2}{HTML}{44CF6E} % #44CF6E
+\definecolor{colorGreen3}{HTML}{0CB54F} % #0CB54F
+\definecolor{colorGreen4}{HTML}{4EA24C} % #4EA24C
+\definecolor{colorGreen5}{HTML}{43a047} % #43a047
+
+% S
+\definecolor{colorSGreen}{HTML}{98C379} % #98C379
+\definecolor{colorSGreen2}{HTML}{A3BE8C} % #A3BE8C
+\definecolor{colorSGreen3}{HTML}{B0C07E} % #B0C07E
+\definecolor{colorSGreen4}{HTML}{B5BD68} % #B5BD68
+
+% F
+% strange color (cool in light and dark, but different)
+\definecolor{colorFGreen}{HTML}{1D694B} % #1D694B
+\definecolor{colorFGreen2}{HTML}{c6ff00} % #c6ff00
+
+
+
+%####=-> cyan <-=####%
+
+\definecolor{colorCyan}{HTML}{00BCD4} % #00BCD4
+\definecolor{colorCyan2}{HTML}{2DB7B5} % #2DB7B5
+
+% D
+\definecolor{colorDCyan}{HTML}{3EB4BF} % #3EB4BF
+\definecolor{colorDCyan2}{HTML}{0084BC} % #0084BC
+
+% L
+\definecolor{colorLCyan}{HTML}{56B6C2} % #56B6C2
+
+
+
+%####=-> blue <-=####%
+
+\definecolor{colorBlue}{HTML}{027AFF} % #027AFF
+\definecolor{colorBlue2}{HTML}{2E80F2} % #2E80F2
+\definecolor{colorBlue3}{HTML}{3D74F6} % #3D74F6
+\definecolor{colorBlue4}{HTML}{086DDD} % #086DDD
+
+% D
+\definecolor{colorDBlue}{HTML}{2563EB} % #2563EB
+
+% L
+\definecolor{colorLBlue}{HTML}{65BCFF} % #65BCFF
+\definecolor{colorLBlue2}{HTML}{61AFEF} % #61AFEF
+\definecolor{colorLBlue3}{HTML}{88C0D0} % #88C0D0
+
+% S
+\definecolor{colorSBlue}{HTML}{8FBCBB} % #8FBCBB
+\definecolor{colorSBlue2}{HTML}{8ABEB7} % #8ABEB7
+\definecolor{colorSBlue3}{HTML}{8ABEB7} % #8ABEB7
+
+
+
+%####=-> purple <-=####%
+
+\definecolor{colorPurple}{HTML}{7C3AED} % #7C3AED
+\definecolor{colorPurple2}{HTML}{876BE0} % #876BE0
+
+% D
+\definecolor{colorDPurple}{HTML}{7A88CF} % #7A88CF
+
+% L
+\definecolor{colorLPurple}{HTML}{B4C2F0} % #B4C2F0
+
+
+
+%####=-> magenta <-=####%
+
+\definecolor{colorMagenta}{HTML}{FF00FF} % #FF00FF
+
+
+
+%####=-> yellow <-=####%
+
+% LL
+\definecolor{colorLLYellow}{HTML}{FFE621} % #FFE621
+\definecolor{colorLLYellow2}{HTML}{FFDE21} % #FFDE21
+\definecolor{colorLLYellow3}{HTML}{fdd835} % #fdd835
+\definecolor{colorLLYellow4}{HTML}{E8C70C} % #E8C70C
+
+% DD
+\definecolor{colorDDYellow}{HTML}{986800} % #986800
+
+
+
+%####=-> brown <-=####%
+
+\definecolor{colorBrown}{HTML}{D19A66} % #D19A66
+\definecolor{colorBrown2}{HTML}{E5B567} % #E5B567
+
+% DD
+\definecolor{colorDDBrown}{HTML}{F0C674} % #F0C674
+\definecolor{colorDDBrown2}{HTML}{FFC777} % #FFC777
+
+
+
+
+
+\endinput

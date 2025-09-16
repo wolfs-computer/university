@@ -1,0 +1,8 @@
+\babel@toc {nil}{}\relax 
+\contentsline {section}{\numberline {1}Intro}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}sub intro}{3}{subsection.1.1}%
+\contentsline {subsubsection}{\numberline {1.1.1}sub sub intro}{3}{subsubsection.1.1.1}%
+\babel@toc {russian}{}\relax 
+\contentsline {section}{\numberline {2}Вещественные числа}{5}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Свойства вещественных чисел}{5}{subsection.2.1}%
+\babel@toc {nil}{}\relax 

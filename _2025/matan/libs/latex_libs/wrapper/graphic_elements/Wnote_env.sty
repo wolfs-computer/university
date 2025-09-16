@@ -1,0 +1,637 @@
+%#################################################=-> PACKAGE: Wnote_env <-=#################################################%
+
+
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{Wnote_env}[2025/05/13 Wnote_env]
+
+
+
+%########################=-> Packages <-=#######################%
+
+
+\usepackage{xkeyval}
+\usepackage{ifthen}
+
+\RequirePackage{\LibPath/basic/WColors}
+\RequirePackage{\LibPath/basic/WSymbols}
+\RequirePackage{\LibPath/basic/WLinks}
+
+\RequirePackage{\LibPath/graphic_elements/Wside_marks}
+\RequirePackage{\LibPath/graphic_elements/Wunderline}
+
+\RequirePackage{\LibPath/document/WTable_of_contents}
+
+
+
+%#################################################=-> Wnote_env <-=#################################################%
+
+
+
+\makeatletter
+    % define keys
+
+    % same for all environments
+
+
+    % default values occur only when name mentioned, but no "=value"
+    % variable prefix: "env"
+    \define@key[NoteEnv]{env}{skip}[0pt]{\def\envSkip{#1}}
+    \define@key[NoteEnv]{env}{indent}[0cm]{\def\envIndent{#1}}
+    \define@key[NoteEnv]{env}{thickness}[4pt]{\def\envThickness{#1}}
+    \define@key[NoteEnv]{env}{Rindent}[0cm]{\def\envRIndent{#1}}
+
+
+    % preset keys (when not mentioned)
+
+    % no new lines between them! This will cause errors!
+    \presetkeys[NoteEnv]{env}{
+        skip=0pt,
+        indent=0cm,
+        thickness=4pt,
+        Rindent=0cm,
+    }{}
+
+\makeatother
+
+
+
+%########################=-> Example <-=#######################%
+%
+% Example
+% ExampleHeading
+% ExampleTask
+% ExampleAnswer
+
+
+
+%####=-> Example (base) <-=####%
+% Creates box,
+% other Example* environments supposed to be placed inside of it
+% problem of the example should be placed here after ExampleHeading 
+
+
+\makeatletter
+    % only for Example environment
+
+    % variable prefix: "envExample"
+
+    \define@key[NoteEnv]{envExample}{colorFg}[colorExample]{\def\envExampleColorFg{#1}}
+    \define@key[NoteEnv]{envExample}{colorBg}[colorExample]{\def\envExampleColorBg{#1}}
+    \define@key[NoteEnv]{envExample}{colorBgPercent}[0]{\def\envExampleColorBgPercent{#1}}
+
+
+    \presetkeys[NoteEnv]{envExample}{
+        colorFg=colorExample,
+        colorBg=colorExample,
+        colorBgPercent=0,
+    }{}
+
+\makeatother
+
+
+\newenvironment{Example}[1]{
+
+    % set key values
+    \setkeys[NoteEnv]{env,envExample}{#1}
+
+    \vskip\envSkip
+    \begin{tcolorbox}[
+        breakable,
+        outer arc=0pt,
+        arc=0pt,
+        colback=\envExampleColorBg!\envExampleColorBgPercent!white, % background color
+        colframe=\envExampleColorFg,
+        leftrule=\envThickness,
+        rightrule=0pt,
+        toprule=0pt,
+        bottomrule=0pt,
+        top=0pt,
+        right=0pt,
+        bottom=0pt,
+        enlarge left by=\envIndent,
+        width=\linewidth-\envIndent-\envRIndent,
+    ]
+}{
+    \end{tcolorbox}
+}
+
+
+
+%####=-> ExampleHeading <-=####%
+% Creates heading, phantom paragraph (name of the paragraph is heading title)
+
+
+\makeatletter
+    % variable prefix: "envExampleHeading"
+
+    \define@key[NoteEnv]{envExampleHeading}{text}[]{\def\envExampleHeadingText{#1}}
+
+    \define@key[NoteEnv]{envExampleHeading}{colorTitle}[colorExample]{\def\envExampleHeadingColorTitle{#1}}
+    \define@key[NoteEnv]{envExampleHeading}{colorText}[colorBlack]{\def\envExampleHeadingColorText{#1}}
+
+    % \define@key[NoteEnv]{envExampleHeading}{sizeTitle}[\Large]{\newcommand{\envExampleHeadingSizeTitle}{#1}}
+    % \define@key[NoteEnv]{envExampleHeading}{sizeText}[colorExample]{\def\envExampleColorText{#1}}
+
+
+    \presetkeys[NoteEnv]{envExampleHeading}{
+        text=,
+        colorTitle=colorExample,
+        colorText=colorBlack,
+        % sizeTitle=\Large,
+    }{}
+
+\makeatother
+
+
+\newcommand{\ExampleHeading}[1]{
+
+    \setkeys[NoteEnv]{envExampleHeading}{#1}
+
+
+    \phantomsection
+    \addcontentsline{toc}{paragraph}{{\color{colorExample} Example: \envExampleHeadingText}}
+
+
+    % {\envExampleHeadingSizeTitle \color{\envExampleHeadingColorTitle} \textbf{Example:}}
+    {\Large \color{\envExampleHeadingColorTitle} \textbf{Example:}}
+    {\color{\envExampleHeadingColorText} \textbf{\envExampleHeadingText}}\\
+}
+
+
+
+%####=-> ExampleTask <-=####%
+% Creates box, with optional title that describes this solution
+
+
+\makeatletter
+
+    % variable prefix: "envExampleTask"
+
+    \define@key[NoteEnv]{envExampleTask}{colorFg}[colorExample]{\def\envExampleTaskColorFg{#1}}
+    \define@key[NoteEnv]{envExampleTask}{colorBg}[colorExample]{\def\envExampleTaskColorBg{#1}}
+    \define@key[NoteEnv]{envExampleTask}{colorBgPercent}[0]{\def\envExampleTaskColorBgPercent{#1}}
+
+    % option
+    \define@key[NoteEnv]{envExampleTask}{optionNumber}[0]{\def\envExampleTaskOptionNumber{#1}}
+    \define@key[NoteEnv]{envExampleTask}{optionText}[]{\def\envExampleTaskOptionText{#1}}
+    \define@key[NoteEnv]{envExampleTask}{optionColorTitle}[colorExample]{\def\envExampleTaskOptionColorTitle{#1}}
+    \define@key[NoteEnv]{envExampleTask}{optionColorText}[colorBlack]{\def\envExampleTaskOptionColorText{#1}}
+
+
+    \presetkeys[NoteEnv]{envExampleTask}{
+        colorFg=colorExample,
+        colorBg=colorExample,
+        colorBgPercent=0,
+        % option
+        optionNumber=0,
+        optionText=,
+        optionColorTitle=colorExample,
+        optionColorText=colorBlack,
+    }{}
+
+\makeatother
+
+
+\newenvironment{ExampleTask}[1]{
+
+    \presetkeys[NoteEnv]{env}{
+        thickness=1pt,
+    }{}
+
+    % set key values
+    \setkeys[NoteEnv]{env,envExampleTask}{#1}
+
+
+    \vskip\envSkip
+    \begin{tcolorbox}[
+        breakable,
+        outer arc=0pt,
+        arc=0pt,
+        colback=\envExampleTaskColorBg!\envExampleTaskColorBgPercent!white, % background color
+        colframe=\envExampleTaskColorFg,
+        leftrule=\envThickness,
+        rightrule=0pt,
+        toprule=0pt,
+        bottomrule=0pt,
+        top=0pt,
+        right=0pt,
+        bottom=0pt,
+        enlarge left by=\envIndent,
+        width=\linewidth-\envIndent-\envRIndent,
+    ]
+        \ifthenelse{\equal{\envExampleTaskOptionNumber}{0}}{
+            % do nothing
+        }{
+            {\large \color{\envExampleTaskOptionColorTitle} \textbf{Option \envExampleTaskOptionNumber:}}
+            {\color{\envExampleTaskOptionColorText} \textbf{\envExampleTaskOptionText}}\\\\
+        }
+}{
+    \end{tcolorbox}
+}
+
+
+
+%####=-> ExampleAnswer <-=####%
+% Creates box,
+% answer to the problem that was presented in general Example box
+% supposed to be placed inside of it
+
+
+\makeatletter
+    % variable prefix: "envExampleAnswer"
+
+    \define@key[NoteEnv]{envExampleAnswer}{colorFg}[colorExample]{\def\envExampleAnswerColorFg{#1}}
+    \define@key[NoteEnv]{envExampleAnswer}{colorBg}[colorExample]{\def\envExampleAnswerColorBg{#1}}
+    \define@key[NoteEnv]{envExampleAnswer}{colorBgPercent}[10]{\def\envExampleAnswerColorBgPercent{#1}}
+    \define@key[NoteEnv]{envExampleAnswer}{colorTitle}[colorExample]{\def\envExampleAnswerColorTitle{#1}}
+
+
+    \presetkeys[NoteEnv]{envExampleAnswer}{
+        colorFg=colorExample,
+        colorBg=colorExample,
+        colorBgPercent=10,
+        colorTitle=colorExample,
+    }{}
+
+\makeatother
+
+
+\newenvironment{ExampleAnswer}[1]{
+
+    % new default value for thickness just for ExampleAnswer
+    \presetkeys[NoteEnv]{env}{
+        thickness=0pt,
+    }{}
+
+
+    % set key values
+    \setkeys[NoteEnv]{env,envExampleAnswer}{#1}
+
+
+    \vskip\envSkip
+    \begin{tcolorbox}[
+        breakable,
+        outer arc=0pt,
+        arc=0pt,
+        colback=\envExampleAnswerColorBg!\envExampleAnswerColorBgPercent!white, % background color
+        colframe=\envExampleAnswerColorFg,
+        leftrule=\envThickness,
+        rightrule=0pt,
+        toprule=0pt,
+        bottomrule=0pt,
+        top=0pt,
+        right=0pt,
+        bottom=0pt,
+        enlarge left by=\envIndent,
+        width=\linewidth-\envIndent-\envRIndent,
+    ]
+        {\large \color{\envExampleAnswerColorTitle} \textbf{Answer:}}\\
+}{
+    \end{tcolorbox}
+}
+
+
+
+%########################=-> Theorem <-=#######################%
+%
+% Theorem
+% TheoremHeading
+% TheoremProof
+
+
+
+%####=-> Theorem (base) <-=####%
+% Creates box,
+% other Theorem* environments supposed to be placed inside of it
+% text of theorem should be placed here after TheoremHeading 
+
+
+\makeatletter
+    % variable prefix: "envTheorem"
+
+    \define@key[NoteEnv]{envTheorem}{colorFg}[colorTheorem]{\def\envTheoremColorFg{#1}}
+    \define@key[NoteEnv]{envTheorem}{colorBg}[colorTheorem]{\def\envTheoremColorBg{#1}}
+    \define@key[NoteEnv]{envTheorem}{colorBgPercent}[0]{\def\envTheoremColorBgPercent{#1}}
+
+
+    \presetkeys[NoteEnv]{envTheorem}{
+        colorFg=colorTheorem,
+        colorBg=colorTheorem,
+        colorBgPercent=0,
+    }{}
+
+\makeatother
+
+
+\newenvironment{Theorem}[1]{
+
+    % set key values
+    \setkeys[NoteEnv]{env,envTheorem}{#1}
+
+
+    \vskip\envSkip
+    \begin{tcolorbox}[
+        breakable,
+        outer arc=0pt,
+        arc=0pt,
+        colback=\envTheoremColorBg!\envTheoremColorBgPercent!white, % background color
+        colframe=\envTheoremColorFg,
+        leftrule=\envThickness,
+        rightrule=0pt,
+        toprule=0pt,
+        bottomrule=0pt,
+        top=0pt,
+        right=0pt,
+        bottom=0pt,
+        enlarge left by=\envIndent,
+        width=\linewidth-\envIndent-\envRIndent,
+    ]
+}{
+    \end{tcolorbox}
+}
+
+
+
+%####=-> TheoremHeading <-=####%
+% Creates heading, phantom paragraph (name of the paragraph is heading title)
+
+
+\makeatletter
+    % variable prefix: "envTheoremHeading"
+
+    \define@key[NoteEnv]{envTheoremHeading}{text}[]{\def\envTheoremHeadingText{#1}}
+
+    \define@key[NoteEnv]{envTheoremHeading}{colorTitle}[colorTheorem]{\def\envTheoremHeadingColorTitle{#1}}
+    \define@key[NoteEnv]{envTheoremHeading}{colorText}[colorBlack]{\def\envTheoremHeadingColorText{#1}}
+
+    % \define@key[NoteEnv]{envTheoremHeading}{sizeTitle}[\Large]{\newcommand{\envTheoremHeadingSizeTitle}{#1}}
+    % \define@key[NoteEnv]{envTheoremHeading}{sizeText}[colorTheorem]{\def\envTheoremColorText{#1}}
+
+
+    \presetkeys[NoteEnv]{envTheoremHeading}{
+        text=,
+        colorTitle=colorTheorem,
+        colorText=colorBlack,
+        % sizeTitle=\Large,
+    }{}
+
+\makeatother
+
+
+\newcommand{\TheoremHeading}[1]{
+
+    \setkeys[NoteEnv]{envTheoremHeading}{#1}
+
+
+    \phantomsection
+    \addcontentsline{toc}{paragraph}{{\color{colorTheorem} Theorem: \envTheoremHeadingText}}
+
+
+    % {\envTheoremHeadingSizeTitle \color{\envTheoremHeadingColorTitle} \textbf{Theorem:}}
+    {\Large \color{\envTheoremHeadingColorTitle} \textbf{Theorem:}}
+    {\color{\envTheoremHeadingColorText} \textbf{\envTheoremHeadingText}}\\
+}
+
+
+
+%####=-> TheoremProof <-=####%
+% Creates box, with heading title "Proof:"
+
+
+\makeatletter
+    % variable prefix: "envTheoremProof"
+
+    \define@key[NoteEnv]{envTheoremProof}{colorFg}[colorTheorem]{\def\envTheoremProofColorFg{#1}}
+    \define@key[NoteEnv]{envTheoremProof}{colorBg}[colorTheorem]{\def\envTheoremProofColorBg{#1}}
+    \define@key[NoteEnv]{envTheoremProof}{colorBgPercent}[0]{\def\envTheoremProofColorBgPercent{#1}}
+    \define@key[NoteEnv]{envTheoremProof}{colorTitle}[colorTheorem]{\def\envTheoremProofColorTitle{#1}}
+
+
+    \presetkeys[NoteEnv]{envTheoremProof}{
+        colorFg=colorTheorem,
+        colorBg=colorTheorem,
+        colorBgPercent=0,
+        colorTitle=colorTheorem,
+    }{}
+
+\makeatother
+
+
+\newenvironment{TheoremProof}[1]{
+
+    % new default value for thickness just for TheoremProof
+    \presetkeys[NoteEnv]{env}{
+        skip=12pt,
+        thickness=1pt,
+    }{}
+
+
+    % set key values
+    \setkeys[NoteEnv]{env,envTheoremProof}{#1}
+
+
+    \medskip
+    \vskip\envSkip
+    \begin{tcolorbox}[
+        breakable,
+        outer arc=0pt,
+        arc=0pt,
+        colback=\envTheoremProofColorBg!\envTheoremProofColorBgPercent!white, % background color
+        colframe=\envTheoremProofColorFg,
+        leftrule=\envThickness,
+        rightrule=0pt,
+        toprule=0pt,
+        bottomrule=0pt,
+        top=0pt,
+        right=0pt,
+        bottom=0pt,
+        enlarge left by=\envIndent,
+        width=\linewidth-\envIndent-\envRIndent,
+    ]
+        {\Large \color{\envTheoremProofColorTitle} \textbf{Proof:}}\\
+        \vskip 0.5pt
+}{
+    \end{tcolorbox}
+}
+
+
+
+%########################=-> Corollaries <-=#######################%
+%
+% Corollaries
+% CorollariesHeading
+% CorollariesItem
+
+
+
+%####=-> Corollaries (base) <-=####%
+% Creates box,
+% other Corollaries* environments supposed to be placed inside of it
+
+
+\makeatletter
+    % variable prefix: "envCorollaries"
+
+    \define@key[NoteEnv]{envCorollaries}{colorFg}[colorCorollaries]{\def\envCorollariesColorFg{#1}}
+    \define@key[NoteEnv]{envCorollaries}{colorBg}[colorCorollaries]{\def\envCorollariesColorBg{#1}}
+    \define@key[NoteEnv]{envCorollaries}{colorBgPercent}[0]{\def\envCorollariesColorBgPercent{#1}}
+
+
+    \presetkeys[NoteEnv]{envCorollaries}{
+        colorFg=colorCorollaries,
+        colorBg=colorCorollaries,
+        colorBgPercent=0,
+    }{}
+
+\makeatother
+
+
+\newenvironment{Corollaries}[1]{
+
+    % set key values
+    \setkeys[NoteEnv]{env,envCorollaries}{#1}
+
+
+    \vskip\envSkip
+    \begin{tcolorbox}[
+        breakable,
+        outer arc=0pt,
+        arc=0pt,
+        colback=\envCorollariesColorBg!\envCorollariesColorBgPercent!white, % background color
+        colframe=\envCorollariesColorFg,
+        leftrule=\envThickness,
+        rightrule=0pt,
+        toprule=0pt,
+        bottomrule=0pt,
+        top=0pt,
+        right=0pt,
+        bottom=0pt,
+        enlarge left by=\envIndent,
+        width=\linewidth-\envIndent-\envRIndent,
+    ]
+}{
+    \end{tcolorbox}
+}
+
+
+
+%####=-> CorollariesHeading <-=####%
+% Creates heading, phantom paragraph (name of the paragraph is heading title)
+
+
+\makeatletter
+    % variable prefix: "envCorollariesHeading"
+
+    \define@key[NoteEnv]{envCorollariesHeading}{text}[]{\def\envCorollariesHeadingText{#1}}
+
+    \define@key[NoteEnv]{envCorollariesHeading}{colorTitle}[colorCorollaries]{\def\envCorollariesHeadingColorTitle{#1}}
+    \define@key[NoteEnv]{envCorollariesHeading}{colorText}[colorBlack]{\def\envCorollariesHeadingColorText{#1}}
+
+    % \define@key[NoteEnv]{envCorollariesHeading}{sizeTitle}[\Large]{\newcommand{\envCorollariesHeadingSizeTitle}{#1}}
+    % \define@key[NoteEnv]{envCorollariesHeading}{sizeText}[colorCorollaries]{\def\envCorollariesColorText{#1}}
+
+
+    \presetkeys[NoteEnv]{envCorollariesHeading}{
+        text=,
+        colorTitle=colorCorollaries,
+        colorText=colorBlack,
+        % sizeTitle=\Large,
+    }{}
+
+\makeatother
+
+
+\newcommand{\CorollariesHeading}[1]{
+
+    \setkeys[NoteEnv]{envCorollariesHeading}{#1}
+
+
+    \phantomsection
+    \addcontentsline{toc}{paragraph}{{\color{colorCorollaries} Corollaries: \envCorollariesHeadingText}}
+
+
+    % {\envCorollariesHeadingSizeTitle \color{\envCorollariesHeadingColorTitle} \textbf{Corollaries:}}
+    {\Large \color{\envCorollariesHeadingColorTitle} \textbf{Corollaries:}}
+    {\color{\envCorollariesHeadingColorText} \textbf{\envCorollariesHeadingText}}\\
+}
+
+
+
+%####=-> CorollariesItem <-=####%
+% Creates box, with optional title that describes something in a manner of
+% "if you do <this> you get <this>"
+
+
+\makeatletter
+
+    % variable prefix: "envCorollariesItem"
+
+    \define@key[NoteEnv]{envCorollariesItem}{colorFg}[colorCorollaries]{\def\envCorollariesItemColorFg{#1}}
+    \define@key[NoteEnv]{envCorollariesItem}{colorBg}[colorCorollaries]{\def\envCorollariesItemColorBg{#1}}
+    \define@key[NoteEnv]{envCorollariesItem}{colorBgPercent}[0]{\def\envCorollariesItemColorBgPercent{#1}}
+
+    % option
+    \define@key[NoteEnv]{envCorollariesItem}{number}[0]{\def\envCorollariesItemNumber{#1}}
+    \define@key[NoteEnv]{envCorollariesItem}{text}[]{\def\envCorollariesItemText{#1}}
+    \define@key[NoteEnv]{envCorollariesItem}{colorTitle}[colorCorollaries]{\def\envCorollariesItemColorTitle{#1}}
+    \define@key[NoteEnv]{envCorollariesItem}{colorText}[colorBlack]{\def\envCorollariesItemColorText{#1}}
+
+
+    \presetkeys[NoteEnv]{envCorollariesItem}{
+        colorFg=colorCorollaries,
+        colorBg=colorCorollaries,
+        colorBgPercent=0,
+        % 
+        number=0,
+        text=,
+        colorTitle=colorCorollaries,
+        colorText=colorBlack,
+    }{}
+
+\makeatother
+
+
+\newenvironment{CorollariesItem}[1]{
+
+    \presetkeys[NoteEnv]{env}{
+        thickness=1pt,
+    }{}
+
+    % set key values
+    \setkeys[NoteEnv]{env,envCorollariesItem}{#1}
+
+
+    \medskip
+    \vskip\envSkip
+    \begin{tcolorbox}[
+        breakable,
+        outer arc=0pt,
+        arc=0pt,
+        colback=\envCorollariesItemColorBg!\envCorollariesItemColorBgPercent!white, % background color
+        colframe=\envCorollariesItemColorFg,
+        leftrule=\envThickness,
+        rightrule=0pt,
+        toprule=0pt,
+        bottomrule=0pt,
+        top=0pt,
+        right=0pt,
+        bottom=0pt,
+        enlarge left by=\envIndent,
+        width=\linewidth-\envIndent-\envRIndent,
+    ]
+        \ifthenelse{\equal{\envCorollariesItemNumber}{0}}{
+            % do nothing
+        }{
+            {\large \color{\envCorollariesItemColorTitle} \textbf{\envCorollariesItemNumber)}}
+            {\color{\envCorollariesItemColorText} \textbf{\envCorollariesItemText}}\\\\
+        }
+}{
+    \end{tcolorbox}
+}
+
+
+
+
+
+\endinput

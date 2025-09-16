@@ -1,0 +1,112 @@
+\glsdefs@newdocentry{Множество}%
+{%
+name={Множество},%
+sort={Множество},%
+type={main},%
+first={Множество},%
+firstplural={Множествоs},%
+text={Множество},%
+plural={Множествоs},%
+description={\hyperlink {Множество}{\symbolArrowDall }},%
+descriptionplural={\hyperlink {Множество}{\symbolArrowDall }},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{Элементы множества}%
+{%
+name={Элементы множества},%
+sort={Элементы множества},%
+type={main},%
+first={Элементы множества},%
+firstplural={Элементы множестваs},%
+text={Элементы множества},%
+plural={Элементы множестваs},%
+description={\hyperlink {Элементы множества}{\symbolArrowDall }},%
+descriptionplural={\hyperlink {Элементы множества}{\symbolArrowDall }},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{Равные множества}%
+{%
+name={Равные множества},%
+sort={Равные множества},%
+type={main},%
+first={Равные множества},%
+firstplural={Равные множестваs},%
+text={Равные множества},%
+plural={Равные множестваs},%
+description={\hyperlink {Равные множества}{\symbolArrowDall }},%
+descriptionplural={\hyperlink {Равные множества}{\symbolArrowDall }},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{Подмножество множества}%
+{%
+name={Подмножество множества},%
+sort={Подмножество множества},%
+type={main},%
+first={Подмножество множества},%
+firstplural={Подмножество множестваs},%
+text={Подмножество множества},%
+plural={Подмножество множестваs},%
+description={\hyperlink {Подмножество множества}{\symbolArrowDall }},%
+descriptionplural={\hyperlink {Подмножество множества}{\symbolArrowDall }},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+

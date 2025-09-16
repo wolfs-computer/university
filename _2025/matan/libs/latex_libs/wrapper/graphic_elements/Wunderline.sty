@@ -1,0 +1,84 @@
+%#################################################=-> PACKAGE: Wunderline <-=#################################################%
+
+
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{Wunderline}[2025/05/13 Wunderline]
+
+
+
+%########################=-> Packages <-=#######################%
+
+
+\usepackage{ulem}
+\usepackage{xcolor}
+
+\RequirePackage{\LibPath/basic/WColors}
+
+
+
+%#################################################=-> Wunderline <-=#################################################%
+
+
+
+\makeatletter
+
+    \newcommand{\ucline}[2]{%
+        \newcommand\temp@ucline{\bgroup\markoverwith
+            {\textcolor{#1}{\rule[-0.5ex]{2pt}{1.5pt}}}\ULon}%
+        \temp@ucline{#2}%
+    }
+
+    \newcommand{\uclined}[2]{%
+        \UL@protected\def\temp@uuline{\leavevmode \bgroup
+            \UL@setULdepth
+            \ifx\UL@on\UL@onin \advance\ULdepth2.8\p@\fi
+            \markoverwith{\textcolor{#1}{\lower\ULdepth\hbox
+                {\kern-.09em\vbox{\hrule width.2em\kern1\p@\hrule}\kern-.03em}}}%
+        \ULon}%
+        \temp@uuline{#2}%
+    }
+
+    \newcommand{\ucwave}[2]{%
+        \UL@protected\def\temp@uwave{\leavevmode \bgroup 
+        \ifdim \ULdepth=\maxdimen \ULdepth 3.5\p@
+        \else \advance\ULdepth2\p@ 
+    \fi \markoverwith{\textcolor{#1}{\lower\ULdepth\hbox{\sixly \char58}}}\ULon}
+        \font\sixly=lasy6 scaled 1402 % does not re-load if already loaded, so no memory drain.
+        \temp@uwave{#2}%
+    }
+
+    \newcommand{\ucdot}[2]{%
+        \UL@protected\def\temp@uclineDot{\leavevmode \bgroup 
+            \UL@setULdepth
+            \ifx\UL@on\UL@onin \advance\ULdepth2\p@\fi
+            \markoverwith{\begingroup
+                %\advance\ULdepth0.08ex 
+                \lower\ULdepth\hbox{\kern.09em \textcolor{#1}{.}\kern.09em}%
+                \endgroup}%
+            \ULon}
+        \temp@uclineDot{#2}
+    }
+
+    \newcommand{\ucdash}[2]{%
+        \UL@protected\def\temp@ucdash{\leavevmode \bgroup 
+            \UL@setULdepth
+            \ifx\UL@on\UL@onin \advance\ULdepth2\p@\fi
+            \markoverwith{\kern.13em
+            \vtop{\color{#1}\kern\ULdepth \hrule width .3em height .2em}%
+            \kern.13em}\ULon}
+            % \FPdiv\temp@ucdash{\f@size}{15}% This is \f@size / 15
+            % \renewcommand{\ULthickness}{\temp@ucdash pt}%
+        \temp@ucdash{#2}
+    }
+
+\makeatothe
+
+
+
+\newcommand{\uTheorem}[2]{\ucline{white_color}{#2}}
+
+
+
+
+\endinput

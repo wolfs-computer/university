@@ -1,0 +1,71 @@
+%#################################################=-> PACKAGE: WSymbols <-=#################################################%
+
+
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{WSymbols}[2025/05/13 WSymbols]
+
+
+
+%########################=-> Packages <-=#######################%
+
+
+\RequirePackage{fontawesome5} % info symbol
+\RequirePackage{fourier} % warning symbol
+\RequirePackage{bbding} % crosses
+\RequirePackage{fdsymbol} % blacktriangleright
+
+\RequirePackage{\LibPath/basic/WColors}
+
+
+
+%#################################################=-> WSymbols <-=#################################################%
+
+
+
+% arrows
+
+\newcommand{\symbolArrowDall}{\faArrows*}
+\newcommand{\symbolArrowDup}{\faArrowUp}
+\newcommand{\symbolArrowUndo}{\faUndo*}
+% \TriangleUp
+% \TriangleDown
+
+
+% themes
+
+\newcommand{\symbolCode}{\faCode}
+
+
+% services (github, ...)
+
+\newcommand{\symbolGithub}{\faGithub}
+\newcommand{\symbolGoogle}{\faGoogle}
+\newcommand{\symbolTelegram}{\faTelegramPlane}
+\newcommand{\symbolTelegramSecond}{\faTelegram}
+\newcommand{\symbolPinterest}{\faPinterest}
+
+
+
+%########################=-> Document <-=#######################%
+
+\newcommand{\symbolParagraph}{\medblacktriangleright}
+
+
+
+%########################=-> Notes <-=#######################%
+
+\newcommand{\symbolTarget}{\faCrosshairs} % bullet points (main points)
+\newcommand{\symbolWarning}{\warning}
+\newcommand{\symbolInfo}{\faInfoCircle}
+\newcommand{\symbolWrong}{\XSolidBold}
+\newcommand{\symbolCorrect}{\faCheck}
+\newcommand{\symbolMissing}{\faQuestion}
+
+
+
+%########################=-> Physics <-=#######################%
+
+
+
+\endinput
