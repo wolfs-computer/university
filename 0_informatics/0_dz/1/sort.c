@@ -3,7 +3,6 @@
 
 
 int main() {
-
     int a, b, c, d;
     while (1) {
         scanf("%d %d %d %d", &a, &b, &c, &d);
@@ -13,6 +12,8 @@ int main() {
             break;
         }
     }
+
+    int max1, max2, max3;
 
     int tmp;
     if (a < b) {tmp = a; a = b; b = tmp;};

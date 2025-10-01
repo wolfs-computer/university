@@ -11,7 +11,7 @@ int main() {
     long long result = 1;
     for (int i = 1; i < num + 1; i++) {
         result *= i;
-        printf("* %d\n", i);
+        // printf("* %d\n", i);
     }
 
     printf("%lld\n", result);
