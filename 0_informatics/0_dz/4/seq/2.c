@@ -12,8 +12,8 @@ double factorial(int num) {
 }
 
 
-int main() {
 
+void pre() {
     int n;
     scanf("%d", &n);
     double num;
@@ -25,12 +25,36 @@ int main() {
     }
 
     printf("%lf\n", sum);
+}
+
+void post() {
+    int n;
+    scanf("%d", &n);
+    double num;
+    scanf("%lf", &num);
+
+    double sum = 0;
+    int i = 0;
+    do {
+        sum += pow(-1, i) * pow(num, 2 * i + 1) / factorial(2 * i + 1);
+        i++;
+    } while (i <= n);
+
+    printf("%lf\n", sum);
+}
+
+
+int main() {
+
+    // pre();
+    post();
+
     // n
     // 3
     // 0.141120
     // n
     // 1.57
-    // 0.100000
+    // 1.000000
 
 
     return 0;
