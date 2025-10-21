@@ -1,17 +1,17 @@
 #include <stdio.h>
-#include <stdlib.h>
-
 
 
 
 int main() {
 
+    // open file
     FILE *file = fopen("1.txt", "r");
     if (!file) {
-        printf("Error openinig file!");
+        printf("Error opening file!");
         return 1;
     }
 
+    // print quoited text
     int flag = 0;
     char c;
     while ((c = fgetc(file)) != EOF) {
